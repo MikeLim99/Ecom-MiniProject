@@ -7,6 +7,7 @@ import LaptopPage from './pages/LaptopPage'
 import MobileDevices from './pages/MobileDevices'
 import Accesories from './pages/Accesories'
 import CartPage from './pages/CartPage'
+import CustomerPage from './pages/Customers/CustomerPage'
 
 const App = () => {
 
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/mobile" element={<MobileDevices />} />
         <Route path="/accessories" element={<Accesories />} />
         <Route path="/MyCart" element={<CartPage />} />
+        <Route path="/customerprofile" element={<CustomerPage />} />
       </Routes>
     </MainLayout>
   )
