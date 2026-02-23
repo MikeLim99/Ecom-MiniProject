@@ -55,7 +55,7 @@ function CustomerSidebar() {
     </div>
 
     {/* Right Card Container */}
-      <div className="w-[60%] h-[580px] mt-35 bg-[#F8F7F9] border border-[#D9D9D9] p-8">
+      <div className="w-[60%] h-[680px] mt-35 bg-[#F8F7F9] border border-[#D9D9D9] p-8">
         <div className='flex items-center gap-1'>
 
     {/* Right Card Header Content */}
@@ -66,48 +66,56 @@ function CustomerSidebar() {
 
     {/* Right Card Content */}
       <div className='flex justify-center gap-5 mt-10'>
-        <div className='flex-col'>
-        <div className='font-xs'>Full Name <span className='text-red-500'>*</span></div>
+        <div className='flex-col basis-1/2'>
+        <div className='font-xs'>First Name <span className='text-red-500'>*</span></div>
         <input 
           type='text'
-          placeholder='Enter full name'
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md'/>
+          placeholder='Enter first name'
+          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
         </div>
-        <div className='flex-col'>
-        <div className='font-xs'>Phone Number <span className='text-red-500'>*</span></div>
+        <div className='flex-col basis-1/2'>
+        <div className='font-xs'>Last Name <span className='text-red-500'>*</span></div>
         <input 
-          type='number'
-          placeholder='Enter phone number'
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md'/>
+          type='text'
+          placeholder='Enter last name'
+          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
         </div>
       </div>
 
       <div className='flex justify-center gap-5 mt-10'>
-        <div className='flex-col'>
+        <div className='flex-col basis-1/2'>
         <div className='font-xs'>Email Address <span className='text-red-500'>*</span></div>
         <input 
           type='email'
           placeholder='Enter your email' 
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md'/>
+          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
       </div>
-        <div className='flex-col'>
-        <div className='font-xs'>Birth Date</div>
+
+        <div className='flex-col basis-1/2'>
+        <div className='font-xs'>Phone Number</div>
         <input 
-          type='date'
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md'/>
+          type='number'
+          placeholder='Enter phone number'
+          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
         </div> 
       </div>
 
-      <div className='flex justify-center mt-10'>
-        <div className='flex flex-col w-[860px]'>
+      <div className='justify-center mt-10'>
+        <div className='flex flex-col w-[250px]'>
+        <div className='font-xs'>Birth Date</div>
+        <input 
+          type='date'
+          className='h-10 w-full pl-2 border border-[#d9d9d9] rounded-md w-full'/>
+        </div>
+        <div className='flex flex-col mt-10 w-full'>
         <div className='font-xs'>Shipping Address <span className='text-red-500'>*</span></div>
         <input 
           type='text'
           placeholder='Enter shipping address'
-          className='h-10 w-full pl-2 border border-[#d9d9d9] rounded-md'/>
+          className='h-10 w-full pl-2 border border-[#d9d9d9] rounded-md sm:w-['/>
         </div>
       </div>
-      <div className='flex flex-row items-center gap-8 justify-end pr-24 mt-18'>
+      <div className='flex flex-row items-center gap-8 justify-end mt-18'>
         <div className='text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer'>Cancel</div>
         <div className='text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer'>Save Changes</div>
       </div>
