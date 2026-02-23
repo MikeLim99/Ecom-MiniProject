@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi"
+import LoginForm from "../forms/LoginForm"
+import RegisterForm from "../forms/RegisterForm"
+import { useAuthUser } from "../../hooks/useAuthUser";
+import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
 const TopBar = () => {
+    const { handleLogout } = useAuthUser();
+    const [showForm, setShowForm] = useState(null); // null, 'login', or 'register'
+    const { user } = useAuthContext();
     return (
         <div className="h-[205px] w-full">
             <div className="h-[42px] w-full bg-highlight flex flex-row items-center justify-evenly text-sm px-4">
@@ -23,9 +31,18 @@ const TopBar = () => {
                 </div>
                 <div className="basis-1/4 flex justify-center items-center gap-15">
                     <a href="/MyCart" className="relative flex gap-5 items-center"><FiShoppingCart className="text-4xl" /><span className="absolute right-18 top-[-5px] bg-contrast-200 text-white rounded-full w-6 h-6 flex justify-center items-center">1</span><div className="flex flex-col"><span>Your Cart</span><span>$20.00</span></div></a>
-                    <a href="#">Sign in</a>
+                    {user && (
+                    <div>
+                    <div className="hover:cursor-pointer" onClick={handleLogout}>
+                        Logout
+                    </div>
+                    <p>{user.email}</p>
+                    </div>
+                    )}
+                    {!user && (
+                    <div className="hover:cursor-pointer" onClick={() => setShowForm('login')}>Sign in</div>
+                    )}
                 </div>
-                
             </div>
             <div className="h-[40px] w-full flex flex-row items-center justify-evenly text-sm">
                 <a href="/" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Home</a>
@@ -34,6 +51,18 @@ const TopBar = () => {
                 <a href="/accessories" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Accessories</a>
                 <a href="/mobile" className="hover:bg-contrast-200 h-[40px] px-2 flex justify-center items-center rounded-md hover:text-highlight">Mobile Devices</a>
             </div>
+            {showForm === 'login' && (
+              <LoginForm 
+                onClose={() => setShowForm(null)}
+                onSwitchToRegister={() => setShowForm('register')}
+              />
+            )}
+            {showForm === 'register' && (
+              <RegisterForm 
+                onClose={() => setShowForm(null)}
+                onSwitchToLogin={() => setShowForm('login')}
+              />
+            )}
         </div>
     )
 }

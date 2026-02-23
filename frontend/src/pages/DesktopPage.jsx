@@ -8,12 +8,12 @@ function DesktopPage() {
         <div className='my-10'>
         <TextHeader  Title={"Desktop"}/>
         </div>
-        <div className='grid grid-cols-4 gap-5 my-10'>
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
+        <div className='lg:grid grid-cols-4 gap-5 my-10 md:flex sm:flex-wrap'>
+          <ProductCards />
+          <ProductCards />
+          <ProductCards />
+          <ProductCards />
+          <ProductCards />
         </div>
     </div>
   )
