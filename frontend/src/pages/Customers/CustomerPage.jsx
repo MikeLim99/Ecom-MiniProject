@@ -1,6 +1,8 @@
 import React from 'react'
+import { useAuthContext } from '../../hooks/Auth/useAuthContext';
 
 function CustomerSidebar() {
+  const { user } = useAuthContext();
   return (
 
     {/* Cards Container */},
@@ -29,7 +31,7 @@ function CustomerSidebar() {
 
     {/* Left Card Info */}
           <div className="flex flex-col">
-            <span className="font-bold text-[#003F91]">Michael Angelo Lim</span>
+            <span className="font-bold text-[#003F91]">{user?.firstname} {user?.lastname}</span>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-sm text-gray-600">Badge:</span>
               <span className="bg-[#FFBE0B] text-white text-xs px-3 py-1 rounded-full">GOLD</span>
@@ -70,14 +72,14 @@ function CustomerSidebar() {
         <div className='font-xs'>First Name <span className='text-red-500'>*</span></div>
         <input 
           type='text'
-          placeholder='Enter first name'
+          placeholder={user?.firstname}
           className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
         </div>
         <div className='flex-col basis-1/2'>
         <div className='font-xs'>Last Name <span className='text-red-500'>*</span></div>
         <input 
           type='text'
-          placeholder='Enter last name'
+          placeholder={user?.lastname}
           className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
         </div>
       </div>
@@ -87,7 +89,7 @@ function CustomerSidebar() {
         <div className='font-xs'>Email Address <span className='text-red-500'>*</span></div>
         <input 
           type='email'
-          placeholder='Enter your email' 
+          placeholder={user?.email} 
           className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
       </div>
 
