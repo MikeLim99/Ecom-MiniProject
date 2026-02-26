@@ -4,6 +4,7 @@ import LoginForm from "../forms/LoginForm"
 import RegisterForm from "../forms/RegisterForm"
 import { useAuthUser } from "../../hooks/useAuthUser";
 import { useAuthContext } from "../../hooks/Auth/useAuthContext";
+import { Link } from "react-router";
 
 const TopBar = () => {
     const { handleLogout } = useAuthUser();
@@ -30,7 +31,21 @@ const TopBar = () => {
                     <button className="absolute right-0 bg-contrast-200 text-white py-4 px-10 rounded-r-md">Search</button>
                 </div>
                 <div className="basis-1/4 flex justify-center items-center gap-15">
-                    <a href="/MyCart" className="relative flex gap-5 items-center"><FiShoppingCart className="text-4xl" /><span className="absolute right-18 top-[-5px] bg-contrast-200 text-white rounded-full w-6 h-6 flex justify-center items-center">1</span><div className="flex flex-col"><span>Your Cart</span><span>$20.00</span></div></a>
+                    <Link
+                        to={user ? "/MyCart" : "#"}
+                        onClick={!user ? (event) => {
+                            event.preventDefault();
+                            setShowForm('login');
+                        } : undefined}
+                        className="relative flex gap-5 items-center"
+                    >
+                        <FiShoppingCart className="text-4xl" />
+                        <span className="absolute right-18 top-[-5px] bg-contrast-200 text-white rounded-full w-6 h-6 flex justify-center items-center">1</span>
+                        <div className="flex flex-col">
+                            <span>Your Cart</span>
+                            <span>$20.00</span>
+                        </div>
+                    </Link>
                     {user && (
                     <div>
                     <div className="hover:cursor-pointer" onClick={handleLogout}>
@@ -45,11 +60,11 @@ const TopBar = () => {
                 </div>
             </div>
             <div className="h-[40px] w-full flex flex-row items-center justify-evenly text-sm">
-                <a href="/" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Home</a>
-                <a href="/desktop" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Desktop</a>
-                <a href="/laptop" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Laptop</a>
-                <a href="/accessories" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Accessories</a>
-                <a href="/mobile" className="hover:bg-contrast-200 h-[40px] px-2 flex justify-center items-center rounded-md hover:text-highlight">Mobile Devices</a>
+                <Link to="/" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Home</Link>
+                <Link to="/desktop" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Desktop</Link>
+                <Link to="/laptop" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Laptop</Link>
+                <Link to="/accessories" className="hover:bg-contrast-200 h-[40px] w-[90px] flex justify-center items-center rounded-md hover:text-highlight">Accessories</Link>
+                <Link to="/mobile" className="hover:bg-contrast-200 h-[40px] px-2 flex justify-center items-center rounded-md hover:text-highlight">Mobile Devices</Link>
             </div>
             {showForm === 'login' && (
               <LoginForm 
