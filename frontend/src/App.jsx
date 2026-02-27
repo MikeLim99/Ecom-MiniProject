@@ -11,6 +11,7 @@ import CustomerPage from './pages/Customers/CustomerPage'
 import { useAuthContext } from './hooks/Auth/useAuthContext'
 import PageNotFound from './pages/errors/PageNotFound'
 import AdminLayout from './_layouts/AdminLayout'
+import AdminInventory from './pages/Admin/AdminInventory'
 
 const App = () => {
   const { user } = useAuthContext()
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/MyCart" element={withMainLayout(<CartPage />)} />
           <Route path="/customerprofile" element={user ? withMainLayout(<CustomerPage />) : <Navigate to="/*" />} />
           <Route path="/admin" element={withAdminLayout(<h1>Admin Dashboard</h1>)} />
+          <Route path="/admin/inventory" element={withAdminLayout(<AdminInventory/>)} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
   )
