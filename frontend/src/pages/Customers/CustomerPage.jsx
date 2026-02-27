@@ -1,12 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuthContext } from '../../hooks/Auth/useAuthContext';
+import OrderHistory from './tabs/OrderHistory';
+import MyAccount from './tabs/MyAccount';
+import RatingReviews from './tabs/RatingReviews';
+import ChangePassword from './tabs/ChangePassword';
+import Settings from './tabs/Settings';
 
-function CustomerSidebar() {
+function CustomerPage() {
   const { user } = useAuthContext();
+  const [activeTab, setActiveTab] = useState('MyAccount')
+
+  const renderTabContent = () => {
+    switch(activeTab) {
+      case 'MyAccount':
+        return <MyAccount />
+      case 'OrderHistory':
+        return <OrderHistory />
+      case 'RatingReviews':
+        return <RatingReviews />
+      case 'ChangePassword':
+        return <ChangePassword />
+      case 'Settings':
+        return <Settings />
+      default:
+        return <MyAccount />
+    }
+  }
+
+  const activeTabStyle = "pl-5 py-2 bg-[#003F91] text-white cursor-pointer"
   return (
 
     {/* Cards Container */},
-    <div className='flex gap-8'>
+    <div className='flex gap-8 pb-20'>
 
     {/* Left Card Container */}
     <div className="ml-55 w-[15%] h-[45%] bg-[#F8F7F9] flex flex-col border border-[#D9D9D9] mt-35">
@@ -42,11 +67,11 @@ function CustomerSidebar() {
 
     {/* Navs */}
       <div className="flex flex-col pb-5 mt-6">
-        <div className="pl-5 py-2 bg-[#003F91] text-white cursor-pointer">My Account</div>
-        <div className="pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer">Order History</div>
-        <div className="pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer">Rating & Reviews</div>
-        <div className="pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer">Change Password</div>
-        <div className="pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer">Settings</div>
+        <div className={activeTab === 'MyAccount' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('MyAccount')}>My Account</div>
+        <div className={activeTab === 'OrderHistory' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('OrderHistory')}>Order History</div>
+        <div className={activeTab === 'RatingReviews' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('RatingReviews')}>Rating & Reviews</div>
+        <div className={activeTab === 'ChangePassword' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('ChangePassword')}>Change Password</div>
+        <div className={activeTab === 'Settings' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('Settings')}>Settings</div>
       </div>
 
     {/* Log Out */}
@@ -57,74 +82,11 @@ function CustomerSidebar() {
     </div>
 
     {/* Right Card Container */}
-      <div className="w-[60%] h-[680px] mt-35 bg-[#F8F7F9] border border-[#D9D9D9] p-8">
-        <div className='flex items-center gap-1'>
-
-    {/* Right Card Header Content */}
-          <div className="h-8 w-2 bg-[#FFBE0B]"></div>
-          <h1 className="text-3xl font-bold text-[#003F91]">Personal Info</h1>
-        </div>
-        <div className="mt-6 h-[2px] bg-[#D9D9D9] w-full"></div>
-
-    {/* Right Card Content */}
-      <div className='flex justify-center gap-5 mt-10'>
-        <div className='flex-col basis-1/2'>
-        <div className='font-xs'>First Name <span className='text-red-500'>*</span></div>
-        <input 
-          type='text'
-          placeholder={user?.firstname}
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
-        </div>
-        <div className='flex-col basis-1/2'>
-        <div className='font-xs'>Last Name <span className='text-red-500'>*</span></div>
-        <input 
-          type='text'
-          placeholder={user?.lastname}
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
-        </div>
-      </div>
-
-      <div className='flex justify-center gap-5 mt-10'>
-        <div className='flex-col basis-1/2'>
-        <div className='font-xs'>Email Address <span className='text-red-500'>*</span></div>
-        <input 
-          type='email'
-          placeholder={user?.email} 
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
-      </div>
-
-        <div className='flex-col basis-1/2'>
-        <div className='font-xs'>Phone Number</div>
-        <input 
-          type='number'
-          placeholder='Enter phone number'
-          className='h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full'/>
-        </div> 
-      </div>
-
-      <div className='justify-center mt-10'>
-        <div className='flex flex-col w-[250px]'>
-        <div className='font-xs'>Birth Date</div>
-        <input 
-          type='date'
-          className='h-10 w-full pl-2 border border-[#d9d9d9] rounded-md w-full'/>
-        </div>
-        <div className='flex flex-col mt-10 w-full'>
-        <div className='font-xs'>Shipping Address <span className='text-red-500'>*</span></div>
-        <input 
-          type='text'
-          placeholder='Enter shipping address'
-          className='h-10 w-full pl-2 border border-[#d9d9d9] rounded-md sm:w-['/>
-        </div>
-      </div>
-      <div className='flex flex-row items-center gap-8 justify-end mt-18'>
-        <div className='text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer'>Cancel</div>
-        <div className='text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer'>Save Changes</div>
-      </div>
-
+      <div className="w-[60%] h-[680px] mt-35 bg-[#F8F7F9] border border-[#D9D9D9] p-8 overflow-y-auto">
+        {renderTabContent()}
       </div>
     </div>
   )
 }
 
-export default CustomerSidebar
+export default CustomerPage

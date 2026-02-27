@@ -14,7 +14,7 @@ import AdminLayout from './_layouts/AdminLayout'
 import AdminInventory from './pages/Admin/AdminInventory'
 
 const App = () => {
-  const { user } = useAuthContext()
+  const { user, authIsReady } = useAuthContext()
   const withMainLayout = (page) => <MainLayout>{page}</MainLayout>
   const withAdminLayout = (page) => <AdminLayout>{page}</AdminLayout>
   return (
@@ -26,7 +26,16 @@ const App = () => {
           <Route path="/mobile" element={withMainLayout(<MobileDevices />)} />
           <Route path="/accessories" element={withMainLayout(<Accesories />)} />
           <Route path="/MyCart" element={withMainLayout(<CartPage />)} />
-          <Route path="/customerprofile" element={user ? withMainLayout(<CustomerPage />) : <Navigate to="/*" />} />
+          <Route
+            path="/customerprofile"
+            element={
+              !authIsReady
+                ? null
+                : user
+                  ? withMainLayout(<CustomerPage />)
+                  : <Navigate to="/" replace />
+            }
+          />
           <Route path="/admin" element={withAdminLayout(<h1>Admin Dashboard</h1>)} />
           <Route path="/admin/inventory" element={withAdminLayout(<AdminInventory/>)} />
           <Route path="*" element={<PageNotFound />} />

@@ -5,10 +5,12 @@ import RegisterForm from "../forms/RegisterForm"
 import { useAuthUser } from "../../hooks/useAuthUser";
 import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 import { Link } from "react-router";
+import { CgProfile } from "react-icons/cg";
 
 const TopBar = () => {
     const { handleLogout } = useAuthUser();
     const [showForm, setShowForm] = useState(null); // null, 'login', or 'register'
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
     const { user } = useAuthContext();
     return (
         <div className="h-[205px] w-full">
@@ -47,11 +49,41 @@ const TopBar = () => {
                         </div>
                     </Link>
                     {user && (
-                    <div>
-                    <div className="hover:cursor-pointer" onClick={handleLogout}>
-                        Logout
-                    </div>
-                    <p>{user.email}</p>
+                    <div className="relative">
+                        <button
+                            type="button"
+                            onClick={() => setShowProfileMenu((prev) => !prev)}
+                            className="flex items-center gap-2 transition-all duration-300 hover:cursor-pointer"
+                        >
+                            <CgProfile className="text-2xl" />
+                            <span>{user.firstname}</span>
+                        </button>
+
+                        {showProfileMenu && (
+                            <ul className="absolute right-0 top-12 min-w-[170px] bg-highlight-200 border border-gray-300 rounded-md shadow-md z-50 overflow-hidden">
+                                <li>
+                                    <Link
+                                        to="/customerprofile"
+                                        className="block px-4 py-2 hover:bg-highlight"
+                                        onClick={() => setShowProfileMenu(false)}
+                                    >
+                                        My Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="w-full text-left px-4 py-2 hover:bg-highlight"
+                                        onClick={() => {
+                                            handleLogout();
+                                            setShowProfileMenu(false);
+                                        }}
+                                    >
+                                        Logout
+                                    </button>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                     )}
                     {!user && (
