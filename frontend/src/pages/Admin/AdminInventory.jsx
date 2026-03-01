@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import InputBox from '../../component/basics/InputBox';
 
 function AdminInventory() {
+  const [ showAddProduct, setShowAddProduct ] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   return (
     
     <div className='flex flex-col w-full min-h-screen bg-white'>
@@ -21,10 +24,45 @@ function AdminInventory() {
         </div>
 
       {/* Button */}
-        <button className='bg-[#003F91] text-white px-8 h-12 rounded-lg'>Add Product
+        <button className='bg-[#003F91] text-white px-8 h-12 rounded-lg' onClick={() => setShowAddProduct(true)}>
+          Add Product
         </button>
       </div>
-
+      {showAddProduct && (
+        <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50' onClick={(e) => setShowAddProduct(false)}>
+          <div className='bg-white p-6 rounded-lg w-200' onClick={(e) => e.stopPropagation()}>
+            <h2 className='text-xl mb-4'>Add New Product</h2>
+            <div className='flex items-center justify-center gap-3'>
+              <input
+                id='productImage'
+                type='file'
+                accept='image/*'
+                className='hidden'
+                onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+              />
+              <label
+                htmlFor='productImage'
+                className='cursor-pointer bg-[#003F91] text-white px-4 py-2 rounded-md hover:opacity-90'
+              >
+                Upload Image
+              </label>
+              <span className='text-sm text-gray-600'>
+                {selectedFile ? selectedFile.name : 'No file selected'}
+              </span>
+            </div>
+            <div className='flex gap-5'>
+              <InputBox label={"Product Name"}/>
+              <InputBox label={"Price"} Type='number'/>
+            </div>
+            <div className='flex gap-5'>
+              <InputBox label={"Category"}/>
+              <InputBox label={"Stock"} Type='number'/>
+            </div>
+            <label className='block mb-2 text-sm font-medium text-gray-700'>Description</label>
+            <textarea name="description" id="description" className='w-full p-2 border border-gray-300 rounded-md mb-4' placeholder='Enter product description'></textarea>
+          </div>
+        </div>
+      )}
       {/* Stats */}
       <div className='px-15 pt-5 bg-white'>
         <div className='flex flex-row justify-between gap-15 bg-white'>
@@ -66,7 +104,7 @@ function AdminInventory() {
       </div>
 
     {/* Stocks */}
-    <div className='mx-15 mt-5 border border-[#D9D9D9] rounded-xl'>
+    <div className='mx-15 mt-5 border border-[#D9D9D9] rounded-xl h-[400px] overflow-auto'>
       <table className='w-full text-left border-collapse'>
         <thead className='border-b border-[#D9D9D9]'>
           <tr>

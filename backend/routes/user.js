@@ -1,6 +1,6 @@
 import express from 'express';
 import userController from '../controller/userController.js';
-import requireAuth from '../middleware/requireAuth.js';
+
 
 const { loginUser, registerUser } = userController;
 

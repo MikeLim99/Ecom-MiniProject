@@ -3,9 +3,9 @@ import SideBar from '../component/semantics/SideBar'
 
 function AdminLayout({children}) {
   return (
-    <div className="flex w-screen">
+    <div className="flex w-full">
       <SideBar />
-      <main className='w-full'>{children}</main>
+      <main className='ml-20 w-full'>{children}</main>
     </div>
   )
 }
