@@ -7,6 +7,6 @@ const { addProduct } = productController;
 
 const router = express.Router();
 
-router.post('/addProduct', requireAuth, uploadProductImage.single('productImage'), addProduct)
+router.post('/addProduct', uploadProductImage.single('productImage'), addProduct)
 
 export default router;
