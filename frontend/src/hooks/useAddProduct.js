@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const useAddProduct = () => {
     const [ formData, setFormData ] = useState({
@@ -23,11 +24,6 @@ export const useAddProduct = () => {
         }))
     }
 
-        //     setFormData({
-        //     ...formData,
-        //     [e.target.name]: e.target.value,
-        // });
-
     const handleAddProduct = async(e) => {
         e.preventDefault();
         console.log("Form Data: ", formData);
@@ -41,12 +37,13 @@ export const useAddProduct = () => {
             setFormData({
                 productName: "",
                 productDescription: "",
-                price: 0,
+                price: "",
                 category: "",
-                discount: 0,
-                stock: 0,
+                discount: "",
+                stock: "",
                 productImage: null
             })
+            toast.success("Product added successfully!");
         } catch (error) {
             console.error("Error adding product:", error);
         }

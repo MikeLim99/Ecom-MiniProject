@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import InputBox from '../../component/basics/InputBox';
 import Button from '../../component/basics/Button';
 import AddProductModal from '../../component/modals/addProductModal';
+import { useGetProduct } from '../../hooks/useGetProduct';
+import EditProductModal from '../../component/modals/EditProductModal';
 
 function AdminInventory() {
   const [ showAddProduct, setShowAddProduct ] = useState(false);
   const [ selectedFile, setSelectedFile ] = useState(null);
+  const [ selectedProduct, setSelectedProduct ] = useState(null);
+  const { products, getAllProducts } = useGetProduct();
   return (
     <div className='flex flex-col w-full h-screen bg-white'>
       {/* Header */}
@@ -25,9 +29,9 @@ function AdminInventory() {
         </div>
 
       {/* Button */}
-        <Button Title={"Add Product"} OnClick={() => setShowAddProduct(true)}/>
+        <Button Title={"Add Product"} OnClick={() => setShowAddProduct("AddProduct")}/>
       </div>
-      {showAddProduct && (
+      {showAddProduct === "AddProduct" && (
         <AddProductModal
           onClose={() => setShowAddProduct(false)}
           onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
@@ -73,7 +77,7 @@ function AdminInventory() {
 
         </div>
       </div>
-
+    
     {/* Stocks */}
     <div className='mx-15 border border-[#D9D9D9] rounded-xl h-screen overflow-auto my-10'>
       <table className='w-full text-left border-collapse'>
@@ -90,22 +94,33 @@ function AdminInventory() {
           </tr>
         </thead>
             <tbody>
-    {/* First Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>1</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>Yes</td>
-                <td className='p-4'>$550.00</td>
-                <td className='p-4'>$50.00</td>
+              {products.map((product, index) => (
+                <tr key={product._id} className='text-center border-b border-[#D9D9D9]'>
+                  <td className='p-4'>{index + 1}</td>
+                  <td className='p-4'>{product.productName}</td>
+                  <td className='p-4'>{product.featured ? "Yes" : "No"}</td>
+                  <td className='p-4'>${product.price}</td>
+                <td className='p-4'>${product.discount}</td>
                 <td className='p-4'>300</td>
-                <td className='p-4'>132</td>
+                <td className='p-4'>{product.stock}</td>
                 <td className='p-4'>
                   <div className='flex items-center justify-center gap-3'>
     {/* Edit Button */}
-                    <button>
+                    <button onClick={() => {setShowAddProduct("EditProduct"); setSelectedProduct(product);}}>
                       <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
                     </button>
-                    
+                    {showAddProduct === "EditProduct" && (
+                      <EditProductModal
+                        onClose={() => setShowAddProduct(false)}
+                        onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                        selectedFile={selectedFile}
+                        product={selectedProduct}
+                        onSuccess={() => {
+                          getAllProducts();
+                          setShowAddProduct(false);
+                        }}
+                      />
+                    )}
     {/* Delete Button */}
                     <button>
                       <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
@@ -113,171 +128,9 @@ function AdminInventory() {
                   </div>
               </td>
               </tr>
-    {/* Second Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>2</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>No</td>
-                <td className='p-4'>$190.00</td>
-                <td className='p-4'>$80.00</td>
-                <td className='p-4'>281</td>
-                <td className='p-4'>206</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
-    {/* Third Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>3</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>Yes</td>
-                <td className='p-4'>$230.00</td>
-                <td className='p-4'>$20.00</td>
-                <td className='p-4'>149</td>
-                <td className='p-4'>271</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
-    {/* Fourth Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>4</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>No</td>
-                <td className='p-4'>$315.00</td>
-                <td className='p-4'>$70.00</td>
-                <td className='p-4'>290</td>
-                <td className='p-4'>198</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
-    {/* Fifth Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>5</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>No</td>
-                <td className='p-4'>$620.00</td>
-                <td className='p-4'>$60.00</td>
-                <td className='p-4'>160</td>
-                <td className='p-4'>252</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
-    {/* Sixth Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>6</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>Yes</td>
-                <td className='p-4'>$240.00</td>
-                <td className='p-4'>$40.00</td>
-                <td className='p-4'>70</td>
-                <td className='p-4'>122</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
-    {/* Seventh Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>7</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>Yes</td>
-                <td className='p-4'>$740.00</td>
-                <td className='p-4'>$90.00</td>
-                <td className='p-4'>280</td>
-                <td className='p-4'>212</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
-    {/* Eigth Row */}
-              <tr className='text-center border-b border-[#D9D9D9]'>
-                <td className='p-4'>8</td>
-                <td className='p-4'>Ryzen 7 5600G</td>
-                <td className='p-4'>Yes</td>
-                <td className='p-4'>$590.00</td>
-                <td className='p-4'>$100.00</td>
-                <td className='p-4'>254</td>
-                <td className='p-4'>199</td>
-                <td className='p-4'>
-                  <div className='flex items-center justify-center gap-3'>
-    {/* Edit Button */}
-                    <button>
-                      <img src="/actionedit.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                    
-    {/* Delete Button */}
-                    <button>
-                      <img src="/recycle-bin.png" className="w-6 h-6" alt="edit" />
-                    </button>
-                  </div>
-              </td>
-              </tr>
+              ))}
         </tbody>
-      
     {/* Tabs */}
-    
       </table>
     </div>
   </div>
