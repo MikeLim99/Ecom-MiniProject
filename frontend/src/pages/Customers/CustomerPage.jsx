@@ -4,7 +4,6 @@ import OrderHistory from './tabs/OrderHistory';
 import MyAccount from './tabs/MyAccount';
 import RatingReviews from './tabs/RatingReviews';
 import ChangePassword from './tabs/ChangePassword';
-import Settings from './tabs/Settings';
 
 function CustomerPage() {
   const { user } = useAuthContext();
@@ -20,8 +19,6 @@ function CustomerPage() {
         return <RatingReviews />
       case 'ChangePassword':
         return <ChangePassword />
-      case 'Settings':
-        return <Settings />
       default:
         return <MyAccount />
     }
@@ -71,7 +68,6 @@ function CustomerPage() {
         <div className={activeTab === 'OrderHistory' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('OrderHistory')}>Order History</div>
         <div className={activeTab === 'RatingReviews' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('RatingReviews')}>Rating & Reviews</div>
         <div className={activeTab === 'ChangePassword' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('ChangePassword')}>Change Password</div>
-        <div className={activeTab === 'Settings' ? activeTabStyle : "pl-5 py-2 border-b border-[#D9D9D9] cursor-pointer"} onClick={() => setActiveTab('Settings')}>Settings</div>
       </div>
 
     {/* Log Out */}
