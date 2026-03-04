@@ -11,7 +11,8 @@ import CustomerPage from './pages/Customers/CustomerPage'
 import { useAuthContext } from './hooks/Auth/useAuthContext'
 import PageNotFound from './pages/errors/PageNotFound'
 import AdminLayout from './_layouts/AdminLayout'
-import AdminInventory from './pages/Admin/AdminInventory'
+import AdminInventory from './pages/Admin/AdminInventory/AdminInventory'
+import AdminDashboard from './pages/Admin/AdminDashboard/AdminDashboard'
 
 const App = () => {
   const { user, authIsReady } = useAuthContext()
@@ -36,7 +37,7 @@ const App = () => {
                   : <Navigate to="/" replace />
             }
           />
-          <Route path="/admin" element={withAdminLayout(<h1>Admin Dashboard</h1>)} />
+          <Route path="/admin" element={withAdminLayout(<AdminDashboard />)} />
           <Route path="/admin/inventory" element={withAdminLayout(<AdminInventory/>)} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

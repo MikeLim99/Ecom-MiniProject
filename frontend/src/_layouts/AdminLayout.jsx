@@ -5,7 +5,7 @@ function AdminLayout({children}) {
   return (
     <div className="flex w-full">
       <SideBar />
-      <main className='ml-20 w-full'>{children}</main>
+      <main className='w-full'>{children}</main>
     </div>
   )
 }

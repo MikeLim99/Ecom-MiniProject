@@ -1,22 +1,33 @@
 import React from 'react'
 import Button from '../component/basics/Button'
+import { useParams } from 'react-router';
+import { useGetProduct } from '../hooks/useGetProduct';
+import { getImageUrl } from '../utils/getImageURLs';
 
 function ProductDetailsPage() {
+    const { id } = useParams();
+    const { products } = useGetProduct();
+
+    const product = products.find((product) => product._id === id);
+
+    if (!product) {
+        return <div className='flex justify-center items-center h-[50vh]'><h1 className='text-2xl'>Product not found</h1></div>;
+    }
   return (
     <div className='flex justify-center gap-5 w-[80%] mx-auto py-10'>
         <div className='basis-1/4 bg-contrast rounded-md w-[300px] h-[300px]'>
-            img here
+            <img src={getImageUrl(product.productImage)} alt={product.productName} className='w-full h-full object-contain'/>
         </div>
         <div className='basis-2/4 bg-highlight-200 rounded-md w-[300px] h-[300px]'>
             <div className='border-b h-1/2 relative p-4 gap-1 flex flex-col border-gray-300'>
                 <h1 className='text-[15px] font-bold'><span className="text-contrast">iTech</span> <span className="text-highlight">Store</span></h1>
-                <h1 className=''>Ryzen 7 5700G</h1>
+                <h1 className=''>{product.productName}</h1>
                 <p className='text-[13px]'>reviews</p>
                 <p className='absolute bottom-0'>Stock : <span className='text-contrast-200'>Available</span></p>
             </div>
             <div className='p-4'>
-                <p className='text-[20px] text-contrast-200'>$550.00</p>
-                <p className='line-through text-gray-300'>$500.00</p>
+                <p className='text-[20px] text-contrast-200'>${product.price.toFixed(2)}</p>
+                <p className='line-through text-gray-300'>${product.discount.toFixed(2)}</p>
             </div>
             <div className='relative flex gap-5 justify-end mr-5 items-center'>
                 <p className='absolute left-5'>Quantity</p>

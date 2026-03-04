@@ -13,11 +13,6 @@ function LandingPage() {
             <TextHeader Title={"Featured Products"}/>
             <div className='grid grid-cols-4 gap-10 mx-auto mt-10 w-[80%]'>
               <ProductCards />
-              <ProductCards />
-              <ProductCards />
-              <ProductCards />
-              <ProductCards />
-              <ProductCards />
             </div>
         </div>
         <div className='h-[fit] w-full bg-contrast p-5'>

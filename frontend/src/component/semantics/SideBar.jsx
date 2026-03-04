@@ -8,16 +8,16 @@ import { TbLockPassword } from "react-icons/tb";
 
 function SideBar() {
   return (
-    <div className="group h-screen w-20 hover:w-[200px] bg-contrast-200 transition-all duration-300 overflow-hidden flex flex-col justify-center items-center fixed">
+    <div className="group h-screen w-20 hover:w-[200px] bg-contrast-200 transition-all duration-300 overflow-hidden flex flex-col justify-center items-center static">
       <ul className="pt-4 h-full flex flex-col gap-2">
-        <li className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
+        <Link to="/admin" className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
           <span className="block group-hover:hidden text-white text-3xl"><MdOutlineSpaceDashboard /></span>
           <span className="hidden group-hover:block w-full">Dashboard</span>
-        </li>
-        <li className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
+        </Link>
+        <Link to="/admin/inventory" className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
           <span className="block group-hover:hidden text-white text-3xl"><MdOutlineInventory2 /></span>
-          <Link to="/admin/inventory" className="hidden group-hover:block">Inventory</Link>
-        </li>
+          <span className="hidden group-hover:block">Inventory</span>
+        </Link>
         <li className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
           <span className="block group-hover:hidden text-white text-3xl"><MdOutlineReviews /></span>
           <span className="hidden group-hover:block">Reviews & Feedback</span>
