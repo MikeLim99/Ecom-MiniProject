@@ -1,8 +1,9 @@
 import React from 'react'
-import Button from '../component/basics/Button'
 import { useParams } from 'react-router';
-import { useGetProduct } from '../hooks/useGetProduct';
-import { getImageUrl } from '../utils/getImageURLs';
+import { getImageUrl } from '../../../utils/getImageURLs';
+import Button from '../../../component/basics/Button';
+import { useGetProduct } from '../../../hooks/useGetProduct';
+
 
 function ProductDetailsPage() {
     const { id } = useParams();

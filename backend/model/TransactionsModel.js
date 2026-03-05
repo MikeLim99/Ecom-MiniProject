@@ -39,7 +39,7 @@ const TransactionSchema = new Mongoose.Schema({
         enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
         default: 'pending'
     }
-})
+}, { timestamps: true });
 
 const TransactionModel = Mongoose.model('Transaction', TransactionSchema);
 

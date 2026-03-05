@@ -3,7 +3,7 @@ import ProductModel from "../model/ProductModel.js";
 // create/add product
 
 const addProduct = async (req, res) => {
-    const { productName, productDescription, price, category, discount, stock } = req.body;
+    const { productName, productDescription, price, category, discount, stock, featuredDisplay } = req.body;
     const productImage = req.file ? `/uploads/products/${req.file.filename}` : "";
 
     try {
@@ -14,7 +14,8 @@ const addProduct = async (req, res) => {
             category,
             discount,
             stock,
-            productImage
+            productImage,
+            featuredDisplay
         })
 
         const savedProduct = await newProduct.save();
@@ -31,7 +32,7 @@ const addProduct = async (req, res) => {
 const editProduct = async (req, res) => {
     const {id} = req.params;
 
-    const { productName, productDescription, price, category, discount, stock } = req.body;
+    const { productName, productDescription, price, category, discount, stock, featuredDisplay } = req.body;
     const productImage = req.file ? `/uploads/products/${req.file.filename}` : "";
 
     try {
@@ -42,7 +43,8 @@ const editProduct = async (req, res) => {
             category,
             discount,
             stock,
-            productImage
+            productImage,
+            featuredDisplay
         })
         if (!updatedProduct) {
             return res.status(404).json({ error: 'Product not found' });
@@ -55,7 +57,7 @@ const editProduct = async (req, res) => {
 //get all products
 const getAllProducts = async (req, res) => {
     try {
-        const products = await ProductModel.find();
+        const products = await ProductModel.find().sort({ createdAt: -1 });
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ error: error.message });

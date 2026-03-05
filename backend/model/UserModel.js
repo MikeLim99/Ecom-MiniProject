@@ -26,6 +26,13 @@ const UserSchema = new Mongoose.Schema({
     profilePicture: {
         type: String,
         default: ''
+    },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    shippingAddress: {
+        type: String,
     }
 })
 

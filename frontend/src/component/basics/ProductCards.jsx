@@ -1,11 +1,21 @@
 import React from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { useGetProduct } from '../../hooks/useGetProduct';
-import { Link, Navigate } from 'react-router';
+import { Link } from 'react-router';
 import { getImageUrl } from '../../utils/getImageURLs';
+import { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 
 function ProductCards() {
     const { products } = useGetProduct();
+    const { dispatch } = useContext(CartContext);
+
+    const handleAddToCart = (e, product) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dispatch({type: 'ADD_TO_CART', payload: product})
+        console.log("Product added to cart:", product); 
+    }
     
   return (
     <>
@@ -21,7 +31,9 @@ function ProductCards() {
         </div>
         <div className='mx-auto w-[200px] flex gap-1 justify-end mt-1'>
             <button className='bg-contrast-200 text-white p-2 rounded-md'>Buy Now</button>
-            <button className='bg-contrast-200 text-white rounded-md flex items-center gap-1 p-2'><FiShoppingCart /><span>+</span></button>
+            <button
+            onClick={(e) => handleAddToCart(e, product)}
+            className='bg-contrast-200 text-white rounded-md flex items-center gap-1 p-2'><FiShoppingCart /><span>+</span></button>
         </div>
     </Link>
     ))}

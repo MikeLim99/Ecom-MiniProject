@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useAuthUser } from "../../hooks/useAuthUser";
 
-function LoginForm({ onClose, onSwitchToRegister }) {
-  const { formData, handleLogin, handleChange } =useAuthUser();
+function LoginForm({ onClose, onSwitchToRegister, successLogin }) {
+  const { formData, handleLogin, handleChange, successLogin: successLoginState } =useAuthUser();
 
-
+  if (successLoginState) {
+    successLogin();
+  }
+  
   return (
     <div className="fixed inset-0 bg-black/75 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">

@@ -1,12 +1,12 @@
 import React from "react";
-import ProductCards from '../component/basics/ProductCards'
-import TextHeader from '../component/basics/TextHeader'
+import TextHeader from '../../../component/basics/TextHeader'
+import ProductCards from "../../../component/basics/ProductCards";
 
-function Accesories() {
+function MobileDevices() {
   return (
     <div className="w-[80%] mx-auto">
       <div className="my-10">
-        <TextHeader Title={"Accessories"} />
+        <TextHeader Title={"Mobile Devices"} />
       </div>
       <div className="grid grid-cols-4 gap-5 my-10">
         <ProductCards />
@@ -19,4 +19,4 @@ function Accesories() {
   );
 }
 
-export default Accesories;
+export default MobileDevices;

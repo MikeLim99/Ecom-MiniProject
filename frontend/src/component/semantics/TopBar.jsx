@@ -6,12 +6,15 @@ import { useAuthUser } from "../../hooks/useAuthUser";
 import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 import { Link } from "react-router";
 import { CgProfile } from "react-icons/cg";
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
 const TopBar = () => {
     const { handleLogout } = useAuthUser();
     const [showForm, setShowForm] = useState(null); // null, 'login', or 'register'
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const { user } = useAuthContext();
+    const { cartItems } = useContext(CartContext);
     return (
         <div className="h-[205px] w-full">
             <div className="h-[42px] w-full bg-highlight flex flex-row items-center justify-evenly text-sm px-4">
@@ -42,10 +45,10 @@ const TopBar = () => {
                         className="relative flex gap-5 items-center"
                     >
                         <FiShoppingCart className="text-4xl" />
-                        <span className="absolute right-18 top-[-5px] bg-contrast-200 text-white rounded-full w-6 h-6 flex justify-center items-center">1</span>
+                        <span className="absolute right-18 top-[-5px] bg-contrast-200 text-white rounded-full w-6 h-6 flex justify-center items-center">{cartItems.length}</span>
                         <div className="flex flex-col">
                             <span>Your Cart</span>
-                            <span>$20.00</span>
+                            <span>${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                         </div>
                     </Link>
                     {user && (
@@ -102,6 +105,7 @@ const TopBar = () => {
               <LoginForm 
                 onClose={() => setShowForm(null)}
                 onSwitchToRegister={() => setShowForm('register')}
+                successLogin={() => setShowForm(null)}
               />
             )}
             {showForm === 'register' && (

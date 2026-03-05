@@ -9,6 +9,7 @@ export const useAuthUser = () => {
         email: '',
         password: ''
     })
+    const [ successLogin, setSuccessLogin ] = useState(false);
 
     const { dispatch } = useAuthContext();
 
@@ -31,6 +32,7 @@ export const useAuthUser = () => {
             };
             localStorage.setItem('user', JSON.stringify(authPayload))
             dispatch({ type: 'LOGIN', payload: authPayload })
+            setSuccessLogin(true);
             console.log('Login successful: ', response.data);
         } catch (error) {
             console.error('Error logging in:', error.message);
@@ -60,5 +62,5 @@ export const useAuthUser = () => {
         localStorage.removeItem('user');
         dispatch({ type: 'LOGOUT' });
     }
-return { formData, setFormData, handleLogin, handleRegister, handleChange, handleLogout };
+return { formData, setFormData, handleLogin, handleRegister, handleChange, handleLogout, successLogin };
 }
