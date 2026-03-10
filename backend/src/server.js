@@ -1,6 +1,7 @@
 import Express from 'express';
 import userRoutes from '../routes/user.js';
 import adminProductRoutes from '../routes/Products.js';
+import transactionRoutes from '../routes/Transaction.js';
 import { ConnectDB } from '../config/database.js';
 import cors from 'cors';
 import path from 'path';
@@ -30,3 +31,4 @@ App.use("/uploads", Express.static(path.join(__dirname, "..", "uploads")));
 //routes
 App.use('/api/user', userRoutes);
 App.use('/admin', adminProductRoutes);
+App.use('/customer/transactions', transactionRoutes);

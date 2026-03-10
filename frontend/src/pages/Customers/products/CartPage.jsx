@@ -4,12 +4,14 @@ import CartBox from "../../../component/basics/CartBox";
 import Button from "../../../component/basics/Button";
 import { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
+import { useBuyProduct } from "../../../hooks/products/useBuyProduct";
 
 
 function CartPage() {
   const { cartItems, dispatch } = useContext(CartContext);
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const { buyProduct } = useBuyProduct();
 
   const handleIncrease = (id) => {
     const selectedItem = cartItems.find((item) => item._id === id);
@@ -70,7 +72,7 @@ function CartPage() {
             <p>: ${totalPrice.toFixed(2)}</p>
             </div>
           </div>
-          <Button Title={"Checkout"} />
+          <Button Title={"Checkout"} OnClick={buyProduct} />
         </div>
       </div>
     </div>

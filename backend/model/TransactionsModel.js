@@ -1,6 +1,17 @@
 import Mongoose from 'mongoose'
 
+const generateOrderId = () => {
+    const randomPart = new Mongoose.Types.ObjectId().toString().slice(-6).toUpperCase();
+    return `ORD-${randomPart}`;
+}
+
 const TransactionSchema = new Mongoose.Schema({
+    orderId: {
+        type: String,
+        required: true,
+        unique: true,
+        default: generateOrderId
+    },
     userId : {
         type: Mongoose.Schema.Types.ObjectId,
         ref: 'User',
