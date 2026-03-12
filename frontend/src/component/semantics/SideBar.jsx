@@ -18,10 +18,10 @@ function SideBar() {
           <span className="block group-hover:hidden text-white text-3xl"><MdOutlineInventory2 /></span>
           <span className="hidden group-hover:block">Inventory</span>
         </Link>
-        <li className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
+        <Link to="/admin/reviews" className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
           <span className="block group-hover:hidden text-white text-3xl"><MdOutlineReviews /></span>
           <span className="hidden group-hover:block">Reviews & Feedback</span>
-        </li>
+        </Link>
         <li className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
           <span className="block group-hover:hidden text-white text-3xl"><TbLockPassword /></span>
           <span className="hidden group-hover:block">Account Password</span>

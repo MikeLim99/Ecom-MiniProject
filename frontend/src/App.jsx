@@ -13,6 +13,7 @@ import CartPage from './pages/Customers/products/CartPage'
 import Accesories from './pages/Customers/products/Accesories'
 import DesktopPage from './pages/Customers/products/DesktopPage'
 import LaptopPage from './pages/Customers/products/LaptopPage'
+import AdminReviews from './pages/Admin/AdminReviews/AdminReviews'
 
 const App = () => {
   const { user, authIsReady } = useAuthContext()
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/admin" element={adminElement(<AdminDashboard />)} />
           <Route path="/admin/inventory" element={adminElement(<AdminInventory/>)} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/admin/reviews" element={adminElement(<AdminReviews/> )} />
         </Routes>
   )
 }
