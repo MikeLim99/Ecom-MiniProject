@@ -22,6 +22,10 @@ function SideBar() {
           <span className="block group-hover:hidden text-white text-3xl"><MdOutlineReviews /></span>
           <span className="hidden group-hover:block">Reviews & Feedback</span>
         </Link>
+        <Link to="/admin/orders" className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
+          <span className="block group-hover:hidden text-white text-3xl"><MdOutlineReviews /></span>
+          <span className="hidden group-hover:block">Orders</span>
+        </Link>
         <li className="px-4 w-full py-2 font-medium whitespace-nowrap hover:bg-highlight text-white h-15 flex items-center">
           <span className="block group-hover:hidden text-white text-3xl"><TbLockPassword /></span>
           <span className="hidden group-hover:block">Account Password</span>

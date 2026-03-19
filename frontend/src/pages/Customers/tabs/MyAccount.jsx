@@ -1,8 +1,23 @@
 import React from "react";
 import { useAuthContext } from "../../../hooks/Auth/useAuthContext";
+import { useAuthUser } from "../../../hooks/useAuthUser";
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function MyAccount() {
-    const { user } = useAuthContext();
+  const { formData, handleUpdateUserInfo, handleChange, setFormData } = useAuthUser();
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (!user) return;
+    setFormData({
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      shippingAddress: user.shippingAddress
+    });
+  }, [user, setFormData])
   return (
     <>
       {/* Right Card Header Content */}
@@ -11,8 +26,9 @@ function MyAccount() {
         <h1 className="text-3xl font-bold text-[#003F91]">Personal Info</h1>
       </div>
       <div className="mt-6 h-[2px] bg-[#D9D9D9] w-full"></div>
-
+      <form onSubmit={(e) => handleUpdateUserInfo(e, user._id)}>
       {/* Right Card Content */}
+      <Toaster />
       <div className="flex justify-center gap-5 mt-10">
         <div className="flex-col basis-1/2">
           <div className="font-xs">
@@ -20,7 +36,9 @@ function MyAccount() {
           </div>
           <input
             type="text"
-            placeholder={user?.firstname}
+            name="firstname"
+            value={formData.firstname}
+            onChange={handleChange}
             className="h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full"
           />
         </div>
@@ -30,7 +48,9 @@ function MyAccount() {
           </div>
           <input
             type="text"
-            placeholder={user?.lastname}
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
             className="h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full"
           />
         </div>
@@ -43,7 +63,8 @@ function MyAccount() {
           </div>
           <input
             type="email"
-            placeholder={user?.email}
+            value={formData.email}
+            onChange={handleChange}
             className="h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full"
           />
         </div>
@@ -51,28 +72,23 @@ function MyAccount() {
         <div className="flex-col basis-1/2">
           <div className="font-xs">Phone Number</div>
           <input
-            type="number"
-            placeholder="Enter phone number"
+            type="text"
+            value={formData.phoneNumber}
+            onChange={handleChange}
             className="h-10 w-[420px] pl-2 border border-[#d9d9d9] rounded-md w-full"
           />
         </div>
       </div>
 
       <div className="justify-center mt-10">
-        <div className="flex flex-col w-[250px]">
-          <div className="font-xs">Birth Date</div>
-          <input
-            type="date"
-            className="h-10 w-full pl-2 border border-[#d9d9d9] rounded-md w-full"
-          />
-        </div>
         <div className="flex flex-col mt-10 w-full">
           <div className="font-xs">
             Shipping Address <span className="text-red-500">*</span>
           </div>
           <input
             type="text"
-            placeholder="Enter shipping address"
+            value={formData.shippingAddress}
+            onChange={handleChange}
             className="h-10 w-full pl-2 border border-[#d9d9d9] rounded-md sm:w-["
           />
         </div>
@@ -81,10 +97,11 @@ function MyAccount() {
         <div className="text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer">
           Cancel
         </div>
-        <div className="text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer">
+        <button className="text-white rounded-md bg-[#003F91] py-3 px-8 cursor-pointer" type="submit">
           Save Changes
-        </div>
+        </button>
       </div>
+      </form>
     </>
   );
 }

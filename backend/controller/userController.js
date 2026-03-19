@@ -6,6 +6,31 @@ const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET_KEY, {expiresIn: '3d'})
 }
 
+const getUser = async(req, res) => {
+try {
+        const user = await UserModel.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const safeUser = {
+            _id: user._id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            role: user.role,
+            profilePicture: user.profilePicture,
+            phoneNumber: user.phoneNumber,
+            shippingAddress: user.shippingAddress
+        };
+
+        return res.json({ user: safeUser });
+    } catch (error) {
+        return res.status(500).json({ message: 'Error fetching profile', error: error.message });
+    }
+}
+
 // login user
 const loginUser = async(req, res) => {
     const { email, password } = req.body;
@@ -32,6 +57,7 @@ const loginUser = async(req, res) => {
             role: user.role,
             profilePicture: user.profilePicture
         };
+        console.log('Login successful: ', token);
         return res.json({ message: 'Login successful', user: safeUser, token });
     } catch (error) {
         return res.status(500).json({ message: 'Error logging in user', error: error.message });
@@ -40,7 +66,7 @@ const loginUser = async(req, res) => {
 
 //signup user
 const registerUser = async(req, res) => {
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, phoneNumber, shippingAddress } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,7 +76,9 @@ const registerUser = async(req, res) => {
             lastname,
             email,
             password: hashedPassword,
-            profilePicture : ""
+            profilePicture : "",
+            phoneNumber,
+            shippingAddress
         });
 
         const token = createToken(registerUser._id);
@@ -61,7 +89,9 @@ const registerUser = async(req, res) => {
             lastname: savedUser.lastname,
             email: savedUser.email,
             role: savedUser.role,
-            profilePicture: savedUser.profilePicture
+            profilePicture: savedUser.profilePicture,
+            phoneNumber: savedUser.phoneNumber,
+            shippingAddress: savedUser.shippingAddress
         };
 
         return res.status(201).json({ user: safeUser, token });
@@ -70,7 +100,32 @@ const registerUser = async(req, res) => {
     }
 }
 
+const editUser = async(req, res) => {
+    const { userId } = req.params;
+    const { firstname, lastname, email, phoneNumber, shippingAddress } = req.body;
+
+    try {
+        const updatedUser = await UserModel.findByIdAndUpdate(userId, {
+            firstname,
+            lastname,
+            email,
+            phoneNumber,
+            shippingAddress
+        }, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        return res.json({ message: 'User updated successfully', user: updatedUser });
+    } catch (error) {
+        return res.status(500).json({ message: 'Error updating user', error: error.message });
+    }
+}
+
 export default {
     loginUser,
-    registerUser
+    registerUser,
+    editUser,
+    getUser
 }

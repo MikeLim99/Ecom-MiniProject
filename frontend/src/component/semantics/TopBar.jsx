@@ -3,20 +3,22 @@ import { FiShoppingCart } from "react-icons/fi"
 import LoginForm from "../forms/LoginForm"
 import RegisterForm from "../forms/RegisterForm"
 import { useAuthUser } from "../../hooks/useAuthUser";
-import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 import { Link } from "react-router";
 import { CgProfile } from "react-icons/cg";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useStateContext } from "../../context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const TopBar = () => {
     const { handleLogout } = useAuthUser();
     const [showForm, setShowForm] = useState(null); // null, 'login', or 'register'
     const [showProfileMenu, setShowProfileMenu] = useState(false);
-    const { user } = useAuthContext();
+    const { user, token } = useStateContext();
     const { cartItems } = useContext(CartContext);
     return (
         <div className="h-[205px] w-full">
+            <Toaster />
             <div className="h-[42px] w-full bg-highlight flex flex-row items-center justify-evenly text-sm px-4">
                 <p>Quezon City, Philippines</p>
                 <p>Long Span Warranty</p>
@@ -37,8 +39,8 @@ const TopBar = () => {
                 </div>
                 <div className="basis-1/4 flex justify-center items-center gap-15">
                     <Link
-                        to={user ? "/MyCart" : "#"}
-                        onClick={!user ? (event) => {
+                        to={user && token ? "/MyCart" : "#"}
+                        onClick={!user || !token ? (event) => {
                             event.preventDefault();
                             setShowForm('login');
                         } : undefined}
@@ -51,7 +53,7 @@ const TopBar = () => {
                             <span>${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                         </div>
                     </Link>
-                    {user && (
+                    {user && token && (
                     <div className="relative">
                         <button
                             type="button"
@@ -89,7 +91,7 @@ const TopBar = () => {
                         )}
                     </div>
                     )}
-                    {!user && (
+                    {!user || !token && (
                     <div className="hover:cursor-pointer" onClick={() => setShowForm('login')}>Sign in</div>
                     )}
                 </div>

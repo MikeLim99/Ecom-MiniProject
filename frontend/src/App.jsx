@@ -2,7 +2,6 @@ import { Route, Routes, Navigate } from 'react-router'
 import MainLayout from './_layouts/MainLayout'
 import LandingPage from './pages/LandingPage'
 import CustomerPage from './pages/Customers/CustomerPage'
-import { useAuthContext } from './hooks/Auth/useAuthContext'
 import PageNotFound from './pages/errors/PageNotFound'
 import AdminLayout from './_layouts/AdminLayout'
 import AdminInventory from './pages/Admin/AdminInventory/AdminInventory'
@@ -14,24 +13,28 @@ import Accesories from './pages/Customers/products/Accesories'
 import DesktopPage from './pages/Customers/products/DesktopPage'
 import LaptopPage from './pages/Customers/products/LaptopPage'
 import AdminReviews from './pages/Admin/AdminReviews/AdminReviews'
+import { useStateContext } from './context/AuthContext'
+import Orders from './pages/Admin/AdminOrders/Orders'
 
 const App = () => {
-  const { user, authIsReady } = useAuthContext()
+  const { user, token, authLoading } = useStateContext()
+
   const withMainLayout = (page) => <MainLayout>{page}</MainLayout>
   const withAdminLayout = (page) => <AdminLayout>{page}</AdminLayout>
+
   const isAdmin = user?.role === 'admin'
+
   const adminElement = (page) => {
-    if (!authIsReady) return null
+    if (authLoading && token) return null
     if (!isAdmin) return <Navigate to="/" replace />
     return withAdminLayout(page)
   }
 
   const customeElement = (page) => {
-    if (!authIsReady) return null
-    if (!user) return <Navigate to="/" replace />
+    if (authLoading && token) return null
+    if (!user || !token) return <Navigate to="/" replace />
     return withMainLayout(page)
   }
-  
   return (
         <Routes>
           <Route path="/" element={withMainLayout(<LandingPage />)} />
@@ -47,8 +50,9 @@ const App = () => {
           />
           <Route path="/admin" element={adminElement(<AdminDashboard />)} />
           <Route path="/admin/inventory" element={adminElement(<AdminInventory/>)} />
-          <Route path="*" element={<PageNotFound />} />
           <Route path="/admin/reviews" element={adminElement(<AdminReviews/> )} />
+          <Route path="/admin/orders" element={adminElement(<Orders /> )} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
   )
 }

@@ -37,7 +37,7 @@ function RegisterForm({ onClose, onSwitchToLogin }) {
         )}
 
         <form onSubmit={handleRegister} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 First Name <span className="text-red-500">*</span>
@@ -80,6 +80,34 @@ function RegisterForm({ onClose, onSwitchToLogin }) {
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-contrast-200"
               placeholder="Enter your email"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Phone Number<span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-contrast-200"
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Shipping Address<span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="shippingAddress"
+              value={formData.shippingAddress}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-contrast-200"
+              placeholder="Enter your shipping address"
             />
           </div>
           <div>

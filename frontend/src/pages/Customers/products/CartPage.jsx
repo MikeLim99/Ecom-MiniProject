@@ -58,7 +58,8 @@ function CartPage() {
             ))
           )}
         </div>
-        <div className="fixed bottom-0 w-[80%] h-[120px] bg-blue-300 shadow-lg flex items-center justify-around rounded-t-lg">
+        {cartItems.length > 0 && ( 
+          <div className="fixed bottom-0 w-[80%] h-[120px] bg-blue-300 shadow-lg flex items-center justify-around rounded-t-lg">
           <h1 className="text-[30px] font-bold basis-1/4 text-center"><span className="text-contrast">iTech</span> <span className="text-highlight">Store</span></h1>
           <div className="flex gap-5">
             <div>
@@ -74,6 +75,8 @@ function CartPage() {
           </div>
           <Button Title={"Checkout"} OnClick={buyProduct} />
         </div>
+        )}
+        
       </div>
     </div>
   );

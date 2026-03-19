@@ -30,3 +30,12 @@ export const createTransaction = async (req, res) => {
         res.status(500).json({ message: 'Error creating transaction', error: error.message });
     }
 }
+
+export const getAllTransactions = async (req, res) => {
+    try {
+        const transactions = await TransactionModel.find().populate('userId', 'firstname lastname');
+        res.status(200).json(transactions);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching transactions', error: error.message });
+    }
+}

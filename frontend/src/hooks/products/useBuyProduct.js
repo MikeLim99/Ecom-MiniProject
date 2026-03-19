@@ -17,6 +17,7 @@ export const useBuyProduct = () => {
                 userId: user._id,
                 items: productInCart
             });
+            alert(response.data.message);
             dispatch({ type: 'CLEAR_CART' });
         } catch (error) {
             console.error("Error buying products: ", error);
