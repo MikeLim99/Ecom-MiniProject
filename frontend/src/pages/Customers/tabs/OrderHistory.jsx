@@ -1,8 +1,12 @@
 import React from 'react'
 import { useAuthContext } from '../../../hooks/Auth/useAuthContext';
+import { useGetOrderHistory } from '../../../hooks/customer/OrderHistory/useGetOrderHistory';
 
 function OrderHistory() {
   const { user } = useAuthContext();
+  const customerId = user?._id || null;
+  const { orderHistory, loading, error } = useGetOrderHistory(customerId);
+
   return (
     <>
       {/* Right Card Header Content */}
@@ -13,76 +17,27 @@ function OrderHistory() {
       <div className="mt-6 h-[2px] bg-[#D9D9D9] w-full mb-5"></div>
 
       {/* Order History Content */}
-      <div className='w-full'>
+      {loading && <p>Loading order history...</p>}
+      {error && <p className='text-red-500'>{error}</p>}
+      {!loading && !error && orderHistory.length === 0 && <p>No order history found.</p>}
+
+      {!loading && !error && orderHistory.map((order) => (
+        <div className='w-full'>
         <div className='border-b h-[150px] p-2 flex'>
           <div className="w-[250px] h-full bg-blue-300">img here</div>
           <div className='flex flex-col justify-between w-full p-2'>
             <div className='flex justify-between w-full'>
-              <p>Ryzen 7 5600G</p>
-              <p>Price : $500.00</p>
+              <p>Order ID: {order.orderId}</p>
+              <p>Price : ${order.totalPrice.toFixed(2)}</p>
             </div>
             <div>
-              <p>Ratings</p>
+              <p>Status: {order.status}</p>
             </div>
           </div>
         </div>
       </div>
-      <div className='w-full'>
-        <div className='border-b h-[150px] p-2 flex'>
-          <div className="w-[250px] h-full bg-blue-300">img here</div>
-          <div className='flex flex-col justify-between w-full p-2'>
-            <div className='flex justify-between w-full'>
-              <p>Ryzen 7 5600G</p>
-              <p>Price : $500.00</p>
-            </div>
-            <div>
-              <p>Ratings</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='w-full'>
-        <div className='border-b h-[150px] p-2 flex'>
-          <div className="w-[250px] h-full bg-blue-300">img here</div>
-          <div className='flex flex-col justify-between w-full p-2'>
-            <div className='flex justify-between w-full'>
-              <p>Ryzen 7 5600G</p>
-              <p>Price : $500.00</p>
-            </div>
-            <div>
-              <p>Ratings</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='w-full'>
-        <div className='border-b h-[150px] p-2 flex'>
-          <div className="w-[250px] h-full bg-blue-300">img here</div>
-          <div className='flex flex-col justify-between w-full p-2'>
-            <div className='flex justify-between w-full'>
-              <p>Ryzen 7 5600G</p>
-              <p>Price : $500.00</p>
-            </div>
-            <div>
-              <p>Ratings</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='w-full'>
-        <div className='border-b h-[150px] p-2 flex'>
-          <div className="w-[250px] h-full bg-blue-300">img here</div>
-          <div className='flex flex-col justify-between w-full p-2'>
-            <div className='flex justify-between w-full'>
-              <p>Ryzen 7 5600G</p>
-              <p>Price : $500.00</p>
-            </div>
-            <div>
-              <p>Ratings</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
+      
     </>
   )
 }

@@ -1,5 +1,6 @@
 import TransactionModel from '../model/TransactionsModel.js';
 import ProductModel from '../model/ProductModel.js';
+import Mongoose from 'mongoose';
 
 export const createTransaction = async (req, res) => {
     const { userId, items } = req.body;
@@ -35,6 +36,22 @@ export const getAllTransactions = async (req, res) => {
     try {
         const transactions = await TransactionModel.find().populate('userId', 'firstname lastname');
         res.status(200).json(transactions);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching transactions', error: error.message });
+    }
+}
+
+export const getTransactionsByUserId = async (req, res) => {
+    const { userId } = req.params;
+
+
+    try {
+        const MyTransactions = await TransactionModel.find({ userId })
+            .populate('userId', 'firstname lastname')
+            .populate('items.productId', 'name price productImage')
+            .sort({ createdAt: -1 });
+
+        res.status(200).json(MyTransactions);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching transactions', error: error.message });
     }
