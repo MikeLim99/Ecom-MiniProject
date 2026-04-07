@@ -78,9 +78,28 @@ const getProductById = async (req, res) => {
     }
 }
 
+export async function postReview(req, res){
+    const { userId, comment, rating } = req.body;
+    const { id } = req.params;
+
+    try {
+        const productToReview = await ProductModel.findByIdAndUpdate(id);
+        if(!productToReview) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        productToReview.reviews.push({ userId, comment, rating });
+        await productToReview.save();
+
+        res.status(200).json({ message: 'Review posted successfully', review: { userId, comment, rating } });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 export default {
     addProduct,
     getAllProducts,
     getProductById,
-    editProduct
+    editProduct,
+    postReview
 };

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuthContext } from '../../../hooks/Auth/useAuthContext';
 import { useGetOrderHistory } from '../../../hooks/customer/OrderHistory/useGetOrderHistory';
+import { getImageUrl } from '../../../utils/getImageURLs';
 
 function OrderHistory() {
   const { user } = useAuthContext();
@@ -24,10 +25,23 @@ function OrderHistory() {
       {!loading && !error && orderHistory.map((order) => (
         <div className='w-full'>
         <div className='border-b h-[150px] p-2 flex'>
-          <div className="w-[250px] h-full bg-blue-300">img here</div>
+          <div className="w-[250px] h-full">
+            {order?.items?.[0]?.productId?.productImage ? (
+              <img
+                src={getImageUrl(order.items[0].productId.productImage)}
+                alt={order?.items?.[0]?.productId?.productName || 'Product'}
+                className='w-full h-full object-contain'
+              />
+            ) : (
+              <div className='w-full h-full flex items-center justify-center text-xs text-gray-600'>
+                No image
+              </div>
+            )}
+          </div>
           <div className='flex flex-col justify-between w-full p-2'>
             <div className='flex justify-between w-full'>
               <p>Order ID: {order.orderId}</p>
+              <p>Product Name: {order.items[0]?.productId?.productName || 'No Name Available'}</p>
               <p>Price : ${order.totalPrice.toFixed(2)}</p>
             </div>
             <div>

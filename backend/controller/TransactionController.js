@@ -34,7 +34,7 @@ export const createTransaction = async (req, res) => {
 
 export const getAllTransactions = async (req, res) => {
     try {
-        const transactions = await TransactionModel.find().populate('userId', 'firstname lastname');
+        const transactions = await TransactionModel.find().populate('userId', 'firstname lastname').populate('items.productId', 'productName price productImage reviews').sort({ createdAt: -1 });
         res.status(200).json(transactions);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching transactions', error: error.message });
@@ -42,15 +42,15 @@ export const getAllTransactions = async (req, res) => {
 }
 
 export const getTransactionsByUserId = async (req, res) => {
-    const { userId } = req.params;
-
-
+    const userId = req.user?._id;
+    if (!userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
     try {
         const MyTransactions = await TransactionModel.find({ userId })
             .populate('userId', 'firstname lastname')
-            .populate('items.productId', 'name price productImage')
+            .populate('items.productId', 'productName price productImage reviews')
             .sort({ createdAt: -1 });
-
         res.status(200).json(MyTransactions);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching transactions', error: error.message });

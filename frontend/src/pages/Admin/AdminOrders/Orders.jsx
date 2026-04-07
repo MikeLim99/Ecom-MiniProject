@@ -20,7 +20,7 @@ function Orders() {
         <tbody>
             {orders.map((order, index) => (
                 <tr key={index} className='text-center border-b border-highlight-200'>
-                    <td>{order._id}</td>
+                    <td>{order.orderId}</td>
                     <td>{order.userId.firstname} {order.userId.lastname}</td>
                     <td>${order.totalPrice.toFixed(2)}</td>
                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
@@ -30,12 +30,10 @@ function Orders() {
                         <button className='bg-blue-500 text-white px-2 py-1 rounded'>Edit</button>
                     </td>
                 </tr>
-                
             ))}
         </tbody>
       </table>
       </div>
-
     </div>
   )
 }

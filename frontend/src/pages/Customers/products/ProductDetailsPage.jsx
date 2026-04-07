@@ -28,7 +28,7 @@ function ProductDetailsPage() {
   return (
     <div className='flex justify-center gap-5 w-[80%] mx-auto py-10'>
         <div className='basis-1/4 bg-contrast rounded-md w-[300px] h-[300px]'>
-            <img src={getImageUrl(product.productImage)} alt={product.productName} className='w-full h-full object-contain'/>
+            <img src={getImageUrl(product.productImage)} alt={product.productName} className='w-full h-full object-cover'/>
         </div>
         <Toaster />
         <div className='basis-2/4 bg-highlight-200 rounded-md w-[300px] h-[300px]'>

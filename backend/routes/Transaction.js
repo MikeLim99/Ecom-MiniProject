@@ -8,6 +8,6 @@ router.post('/buy', createTransaction);
 
 router.get('/transactions', getAllTransactions);
 
-router.get('/transactions/:userId', getTransactionsByUserId);
+router.get('/transactions/me', requireAuth, getTransactionsByUserId);
 
 export default router;
