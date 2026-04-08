@@ -73,6 +73,22 @@ export const useAuthUser = () => {
         }
     }
 
+        const handleUpdatePassword = async(e, id) => {
+        e.preventDefault();
+        try {
+            const response = await axiosClient.put(`/api/user/changePassword/${id}`, {
+                ...formData
+            });
+                const updatedUser = response.data.user;
+                setUser(updatedUser);
+            console.log('User info updated successfully: ', response.data);
+            toast.success("User info updated successfully!");
+        } catch (error) {
+            console.error('Error updating user info:', error.message);
+            toast.error("Error updating user info. Please try again.");
+        }
+    }
+
     const handleLogout = () => {
         setToken(null);
         setUser(null);
@@ -80,5 +96,5 @@ export const useAuthUser = () => {
         localStorage.removeItem('user');
         window.location.reload();
     }
-return { formData, setFormData, handleLogin, handleRegister, handleChange, handleLogout, successLogin, handleUpdateUserInfo };
+return { formData, setFormData, handleLogin, handleRegister, handleChange, handleLogout, successLogin, handleUpdateUserInfo, handleUpdatePassword };
 }

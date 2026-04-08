@@ -7,8 +7,9 @@ function LandingPage() {
   return (
     <div>
         {/* Hero Section */}
-        <div className='h-[55vh] w-full bg-contrast flex items-center justify-center text-white text-4xl'>
-          Hero section
+        <div className='h-[55vh] w-full bg-contrast flex flex-col gap-4 items-center justify-center'>
+          <h1 className='text-xl'>Featured Products</h1>
+          <ProductCards featuredOnly={true} />
           </div>
         {/* Featured Products */}
         <div className='h-[fit] w-full p-5'>

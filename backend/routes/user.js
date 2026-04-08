@@ -3,7 +3,7 @@ import userController from '../controller/userController.js';
 import requireAuth from '../middleware/requireAuth.js';
 
 
-const { loginUser, registerUser, editUser, getUser } = userController;
+const { loginUser, registerUser, editUser, getUser, changePassword } = userController;
 
 const router = express.Router();
 
@@ -19,5 +19,8 @@ router.post('/signup', registerUser)
 
 //edit user routes
 router.put('/UpdateInfo/:userId', editUser)
+
+//change password route
+router.put('/changePassword/:userId', changePassword)
 
 export default router;
