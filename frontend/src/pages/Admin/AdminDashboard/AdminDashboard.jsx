@@ -6,7 +6,7 @@ import TopSoldProducts from './components/TopSoldProducts'
 function AdminDashboard() {
   return (
     <>
-    <div className='w-full h-20 bg-highlight-200 flex items-center p-10'>
+    <div className='bg-[#F8F7F9] h-[93px] flex items-center px-15 text-[22px]'>
         Dashboard
     </div>
     <div className='flex'>

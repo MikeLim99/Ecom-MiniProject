@@ -25,7 +25,7 @@ function Kpi() {
           Jan - Feb 2026
         </div>
       </div>
-      <div className='basis-1/3 h-25 bg-contrast-200 mx-10 rounded-lg flex flex-col justify-center items-center'>
+      <div className='basis-1/3 h-25 bg-[#003F91] text-[#FFBE0B] mx-10 rounded-lg flex flex-col justify-center items-center'>
         <div>
           Total Orders
         </div>
