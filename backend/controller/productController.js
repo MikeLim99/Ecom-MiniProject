@@ -68,7 +68,7 @@ const getProductById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const product = await ProductModel.findById(id).populate('reviews.userId reviews.comment reviews.rating');
+        const product = await ProductModel.findById(id).populate('reviews.userId', 'firstname lastname');
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
         }
@@ -83,7 +83,7 @@ export async function postReview(req, res){
     const { id } = req.params;
 
     try {
-        const productToReview = await ProductModel.findByIdAndUpdate(id);
+        const productToReview = await ProductModel.findById(id);
         if(!productToReview) {
             return res.status(404).json({ error: 'Product not found' });
         }
@@ -93,6 +93,7 @@ export async function postReview(req, res){
         res.status(200).json({ message: 'Review posted successfully', review: { userId, comment, rating } });
     } catch (error) {
         res.status(500).json({ error: error.message });
+        console.error("Error posting review: ", error);
     }
 }
 

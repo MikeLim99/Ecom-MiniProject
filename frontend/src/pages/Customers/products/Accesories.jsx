@@ -9,11 +9,7 @@ function Accesories() {
         <TextHeader Title={"Accessories"} />
       </div>
       <div className="grid grid-cols-4 gap-5 my-10">
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
+        <ProductCards category="accessories" />
       </div>
     </div>
   );

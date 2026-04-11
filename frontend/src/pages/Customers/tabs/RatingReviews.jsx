@@ -23,7 +23,6 @@ function RatingReviews() {
     }));
     setSelectedOrder(order);
   };
-
   return (
     <>
       {/* Right Card Header Content */}
@@ -62,11 +61,11 @@ function RatingReviews() {
                         {user?.firstname} {user?.lastname}
                       </p>
                       <div className="text-[#FFBE0B] text-xs flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <img key={star} src="/star.png" alt="star" className="w-4 h-4" />
+                        {Array.from({ length: myReview?.rating || 0 }, (_, i) => (
+                          <img key={i} src="/star.png" alt="star" className="w-4 h-4" />
                         ))}
                       </div>
-                      <p className="text-[10px] font-bold mt-1">02-14-26</p>
+                      <p className="text-[10px] font-bold mt-1">{order?.createdAt ? new Date(order.createdAt).toLocaleDateString() : "No date available"}</p>
                     </div>
                   </div>
 
@@ -135,7 +134,8 @@ function RatingReviews() {
           className="fixed inset-0 bg-black/20 flex items-center justify-center"
           onClick={() => setSelectedOrder(null)}
         >
-          <form onSubmit={postAReview}>
+          {console.log("Selected Order for Review:", selectedOrder._id)}
+          <form onSubmit={(e) => postAReview(e, reviewData.productId, user?._id)}>
             <div className="bg-white p-6 rounded-lg w-[400px]" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-lg font-bold mb-4">Rate this Product</h2>
               <p className="text-sm mb-2 font-semibold">{selectedProduct?.productName || "Product"}</p>

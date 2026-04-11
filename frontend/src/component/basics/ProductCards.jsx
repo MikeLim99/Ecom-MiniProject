@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { useGetProduct } from '../../hooks/useGetProduct';
 import { Link, useNavigate } from 'react-router';
@@ -6,10 +6,14 @@ import { getImageUrl } from '../../utils/getImageURLs';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 
-function ProductCards({ featuredOnly = false }) {
-    const { products } = useGetProduct();
+function ProductCards({ featuredOnly = false, category = '' }) {
+    const { products, getAllProducts } = useGetProduct();
     const { dispatch } = useContext(CartContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        getAllProducts();
+    }, [getAllProducts])
 
     const handleAddToCart = (e, product, buyNow) => {
         e.preventDefault();
@@ -21,9 +25,17 @@ function ProductCards({ featuredOnly = false }) {
         }
     }
 
-        const displayedProducts = featuredOnly
-            ? products.filter((product) => product.featuredDisplay)
-            : products;
+    const displayedProducts = products.filter((product) => {
+        if (featuredOnly && !product.featuredDisplay) {
+            return false;
+        }
+
+        if (category && product.category !== category) {
+            return false;
+        }
+
+        return true;
+    });
     
   return (
     <>
@@ -34,7 +46,7 @@ function ProductCards({ featuredOnly = false }) {
         </div>
         <div className='mx-auto w-[200px]'>
             <h1 className='text-[15px]'>{product.productName}</h1>
-            <p className='text-[12px]'>reviews</p>
+            <p className='text-[12px]'>reviews ({product.reviews?.length || 0})</p>
             <p className='text-[15px] text-contrast-200'><span className='line-through text-[#D9D9D9]'>${product.discount.toFixed(2)}</span> = ${product.price.toFixed(2)}</p>
         </div>
         <div className='mx-auto w-[200px] flex gap-1 justify-end mt-1'>

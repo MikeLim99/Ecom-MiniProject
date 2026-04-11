@@ -9,11 +9,7 @@ function MobileDevices() {
         <TextHeader Title={"Mobile Devices"} />
       </div>
       <div className="grid grid-cols-4 gap-5 my-10">
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
+        <ProductCards category="phone" />
       </div>
     </div>
   );

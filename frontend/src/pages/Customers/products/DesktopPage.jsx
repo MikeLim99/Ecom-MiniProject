@@ -9,11 +9,7 @@ function DesktopPage() {
         <TextHeader  Title={"Desktop"}/>
         </div>
         <div className='lg:grid grid-cols-4 gap-5 my-10 md:flex sm:flex-wrap'>
-          <ProductCards />
-          <ProductCards />
-          <ProductCards />
-          <ProductCards />
-          <ProductCards />
+          <ProductCards category="desktop" />
         </div>
     </div>
   )

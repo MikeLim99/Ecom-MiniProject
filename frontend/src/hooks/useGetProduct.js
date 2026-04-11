@@ -6,9 +6,7 @@ export const useGetProduct = () => {
     const [products, setProducts] = useState([]);
     const [productById, setProductById] = useState(null);
 
-    useEffect(() => {
-        getAllProducts();
-    }, [])
+
 
     const getAllProducts = async () => {
         try {

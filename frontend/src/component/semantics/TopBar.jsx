@@ -3,7 +3,7 @@ import { FiShoppingCart } from "react-icons/fi"
 import LoginForm from "../forms/LoginForm"
 import RegisterForm from "../forms/RegisterForm"
 import { useAuthUser } from "../../hooks/useAuthUser";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { CgProfile } from "react-icons/cg";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
@@ -16,6 +16,29 @@ const TopBar = () => {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const { user, token } = useStateContext();
     const { cartItems } = useContext(CartContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const categoryByPath = {
+        "/desktop": "desktop",
+        "/laptop": "laptop",
+        "/mobile": "phone",
+        "/accessories": "accessories",
+    };
+
+    const pathByCategory = {
+        desktop: "/desktop",
+        laptop: "/laptop",
+        phone: "/mobile",
+        accessories: "/accessories",
+    };
+
+    const selectedCategory = categoryByPath[location.pathname] || "";
+
+    const handleCategoryChange = (event) => {
+        const nextCategory = event.target.value;
+        navigate(pathByCategory[nextCategory] || "/");
+    };
     return (
         <div className="h-[205px] w-full">
             <Toaster />
@@ -29,11 +52,18 @@ const TopBar = () => {
                 <h1 className="text-[30px] font-bold basis-1/4 text-center"><span className="text-contrast">iTech</span> <span className="text-highlight">Store</span></h1>
                 <div className="relative flex justify-center items-center basis-2/4">
                     <input type="text" className="w-full p-4 border border-gray-300 rounded-md" placeholder="Search products..." />
-                    <select name="category" id="category" className="absolute right-[150px] border-l px-10 border-gray-400">
+                    <select
+                        name="category"
+                        id="category"
+                        value={selectedCategory}
+                        onChange={handleCategoryChange}
+                        className="absolute right-[150px] border-l px-10 border-gray-400"
+                    >
                         <option value="">All Categories</option>
                         <option value="desktop">Desktop</option>
                         <option value="laptop">Laptop</option>
                         <option value="accessories">Accessories</option>
+                        <option value="phone">Mobile Devices</option>
                     </select>
                     <button className="absolute right-0 bg-contrast-200 text-white py-4 px-10 rounded-r-md">Search</button>
                 </div>
