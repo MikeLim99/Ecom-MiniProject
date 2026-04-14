@@ -42,7 +42,7 @@ function ProductCards({ featuredOnly = false, category = '' }) {
     {displayedProducts.map((product) => (
     <Link className='w-[250px] h-[300px] bg-highlight-200 rounded-md shadow-md mx-auto pt-5 hover:scale-105 transition-transform duration-300' key={product._id} to={`/product/${product._id}`} role='button'>
         <div className='w-[210px] h-[150px] rounded-md mx-auto'>
-            <img src={getImageUrl(product.productImage)} alt={product.productName} className='w-full h-full object-contain'/>
+            <img src={getImageUrl(`/uploads/${product.productImage}`)} alt={product.productName} className='w-full h-full object-contain'/>
         </div>
         <div className='mx-auto w-[200px]'>
             <h1 className='text-[15px]'>{product.productName}</h1>
