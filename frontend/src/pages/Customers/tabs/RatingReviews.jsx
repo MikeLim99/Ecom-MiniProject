@@ -114,7 +114,7 @@ function RatingReviews() {
                 </div>
                 <div className="flex-1 ml-10 flex flex-col items-end gap-3">
                   <div className="bg-[#003F91] w-full py-4 rounded-lg text-white text-center font-bold text-sm">
-                    Rate me to get free coins and vouchers!
+                    Rate {product?.productName} to get free {product?.price*.001} coins and vouchers!
                   </div>
                   <button
                     className="bg-[#FFBE0B] px-14 py-2.5 rounded-full font-bold text-lg"

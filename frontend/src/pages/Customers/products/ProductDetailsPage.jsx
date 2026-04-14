@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { getImageUrl } from '../../../utils/getImageURLs';
 import Button from '../../../component/basics/Button';
 import { useGetProduct } from '../../../hooks/useGetProduct';
@@ -14,6 +14,7 @@ function ProductDetailsPage() {
     const [showReview, setReview] = useState(false);
     const product = productById;
     const reviews = product?.reviews || [];
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProductById(id);
@@ -23,15 +24,17 @@ function ProductDetailsPage() {
         return <div className='flex justify-center items-center h-[50vh]'><h1 className='text-2xl'>Product not found</h1></div>;
     }
 
-    const handleAddToCart = (e, product) => {
+    const handleAddToCart = (e, product, buyNow) => {
         e.preventDefault();
         e.stopPropagation();
         dispatch({type: 'ADD_TO_CART', payload: product})
         console.log("Product added to cart:", product);
         toast.success(`${product.productName} added to cart!`);
+        if (buyNow) {
+            navigate('/MyCart');
+        }
     }
 
-    console.log("test", showReview)
   return (
     <div className='flex justify-center gap-5 w-[80%] mx-auto py-10'>
         <div className='basis-1/4 bg-contrast rounded-md w-[300px] h-[300px]'>
@@ -51,8 +54,8 @@ function ProductDetailsPage() {
             </div>
             <div className='relative flex gap-5 justify-end mr-5 items-center'>
                 <p className='absolute left-5'>Quantity</p>
-                <Button Title={"Buy Now"}/>
-                <Button ClassName={"bg-highlight"} Title={"Add to Cart"} OnClick={(e) => handleAddToCart(e, product)}/>
+                <Button Title={"Buy Now"} OnClick={(e) => handleAddToCart(e, product, true)}/>
+                <Button ClassName={"bg-highlight"} Title={"Add to Cart"} OnClick={(e) => handleAddToCart(e, product, false)}/>
             </div>
         </div>
         <div className='basis-2/4 bg-highlight-200 rounded-md w-[300px] h-[300px]'>
