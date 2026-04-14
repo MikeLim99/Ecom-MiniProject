@@ -31,7 +31,7 @@ App.listen(3000, () => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-App.use("/uploads", Express.static(path.join(__dirname, "..", "uploads")));
+App.use("/uploads", Express.static(path.join(__dirname, "uploads")));
 //routes
 App.use('/api/user', userRoutes);
 App.use('/admin', adminProductRoutes);
