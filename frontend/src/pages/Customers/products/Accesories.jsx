@@ -1,6 +1,6 @@
 import React from "react";
-import ProductCards from '../../../component/basics/ProductCards'
-import TextHeader from '../../../component/basics/TextHeader'
+import ProductCards from '../../../components/basics/ProductCards'
+import TextHeader from '../../../components/basics/TextHeader'
 
 function Accesories() {
   return (

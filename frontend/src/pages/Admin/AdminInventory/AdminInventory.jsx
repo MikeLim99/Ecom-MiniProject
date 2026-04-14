@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import InputBox from '../../../component/basics/InputBox';
-import Button from '../../../component/basics/Button';
-import AddProductModal from '../../../component/modals/addProductModal';
+import InputBox from '../../../components/basics/InputBox';
+import Button from '../../../components/basics/Button';
+import AddProductModal from '../../../components/modals/addProductModal';
 import { useGetProduct } from '../../../hooks/useGetProduct';
-import EditProductModal from '../../../component/modals/EditProductModal';
+import EditProductModal from '../../../components/modals/EditProductModal';
 
 function AdminInventory() {
   const [ showAddProduct, setShowAddProduct ] = useState(false);

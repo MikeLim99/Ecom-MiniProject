@@ -1,5 +1,5 @@
 import React from 'react'
-import SideBar from '../component/semantics/SideBar'
+import SideBar from '../components/semantics/SideBar'
 
 function AdminLayout({children}) {
   return (

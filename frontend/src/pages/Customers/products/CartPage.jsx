@@ -1,7 +1,7 @@
 import React from "react";
-import TextHeader from "../../../component/basics/TextHeader";
-import CartBox from "../../../component/basics/CartBox";
-import Button from "../../../component/basics/Button";
+import TextHeader from "../../../components/basics/TextHeader";
+import CartBox from "../../../components/basics/CartBox";
+import Button from "../../../components/basics/Button";
 import { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { useBuyProduct } from "../../../hooks/products/useBuyProduct";

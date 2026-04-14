@@ -1,5 +1,5 @@
-import Footer from "../component/semantics/Footer";
-import TopBar from "../component/semantics/TopBar";
+import Footer from "../components/semantics/Footer";
+import TopBar from "../components/semantics/TopBar";
 
 export default function MainLayout({ children }) {
   return (

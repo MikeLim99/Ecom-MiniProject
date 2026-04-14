@@ -1,7 +1,7 @@
 import React from 'react'
-import TextHeader from '../component/basics/TextHeader'
-import ProductCards from '../component/basics/ProductCards'
-import ContactForm from '../component/forms/ContactForm'
+import TextHeader from '../components/basics/TextHeader'
+import ProductCards from '../components/basics/ProductCards'
+import ContactForm from '../components/forms/ContactForm'
 
 function LandingPage() {
   return (

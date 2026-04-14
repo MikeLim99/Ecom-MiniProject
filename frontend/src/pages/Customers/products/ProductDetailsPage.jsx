@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router';
 import { getImageUrl } from '../../../utils/getImageURLs';
-import Button from '../../../component/basics/Button';
+import Button from '../../../components/basics/Button';
 import { useGetProduct } from '../../../hooks/useGetProduct';
 import { CartContext } from '../../../context/CartContext';
 import toast, { Toaster } from "react-hot-toast";

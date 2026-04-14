@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAuthContext } from "../../../hooks/Auth/useAuthContext";
-import Button from "../../../component/basics/Button";
+import Button from "../../../components/basics/Button";
 import { useAuthUser } from "../../../hooks/useAuthUser";
 
 function ChangePassword() {

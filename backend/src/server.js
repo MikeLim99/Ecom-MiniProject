@@ -1,4 +1,5 @@
 import Express from 'express';
+import dotenv from 'dotenv';
 import userRoutes from '../routes/user.js';
 import adminProductRoutes from '../routes/Products.js';
 import transactionRoutes from '../routes/Transaction.js';
@@ -7,14 +8,16 @@ import { ConnectDB } from '../config/database.js';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+dotenv.config();
 
+const FrontEndURL = process.env.FRONTEND_URL;
 const App = Express();
 
 //middleware
 App.use(Express.json());
 App.use(cors(
     {
-        origin: 'http://localhost:5173',
+        origin: FrontEndURL,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     }
 ));
