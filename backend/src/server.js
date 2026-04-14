@@ -15,12 +15,17 @@ const App = Express();
 
 //middleware
 App.use(Express.json());
-App.use(cors(
-    {
-        origin: FrontEndURL,
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+App.use(cors({
+    origin: function (origin, callback){
+    if (!origin || FrontEndURL.includes(origin)) {
+    callback(null, true);
+    } else {
+    callback(new Error("Not allowed by CORS"));
     }
-));
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 ConnectDB();
 
