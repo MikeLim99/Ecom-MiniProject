@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
-import { useGetProduct } from "./useGetProduct";
-import { useEffect } from "react";
+import axiosClient from "../utils/axiosClient";
 
 
 export const useEditProduct = (product) => {
@@ -32,7 +30,7 @@ export const useEditProduct = (product) => {
         console.log("Form Data: ", formData);
 
         try {
-            const response = await axios.put(`http://localhost:3000/admin/editProduct/${id}`, formData)
+            const response = await axiosClient.put(`/admin/editProduct/${id}`, formData)
             console.log('Product edited successfully: ', response.data);
             setFormData({
                 productName: "",

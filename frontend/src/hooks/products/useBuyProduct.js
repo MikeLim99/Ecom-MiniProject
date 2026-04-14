@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
-import axios from 'axios';
 import { useAuthContext } from '../Auth/useAuthContext';
+import axiosClient from '../../utils/axiosClient';
 
 export const useBuyProduct = () => {
     const { dispatch, cartItems } = useContext(CartContext);
@@ -13,7 +13,7 @@ export const useBuyProduct = () => {
     
     const buyProduct = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/customer/transactions/buy', {
+            const response = await axiosClient.post('/customer/transactions/buy', {
                 userId: user._id,
                 items: productInCart
             });

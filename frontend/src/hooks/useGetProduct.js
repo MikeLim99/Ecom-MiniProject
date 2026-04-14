@@ -1,6 +1,5 @@
-import axios from "axios";
-import { useEffect } from "react";
 import { useState } from "react";
+import axiosClient from "../utils/axiosClient";
 
 export const useGetProduct = () => {
     const [products, setProducts] = useState([]);
@@ -10,7 +9,7 @@ export const useGetProduct = () => {
 
     const getAllProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/admin/getAllProducts');
+            const response = await axiosClient.get('/admin/getAllProducts');
             setProducts(response.data);
         } catch (error) {
             console.error("Error fetching products: ", error);
@@ -21,7 +20,7 @@ export const useGetProduct = () => {
 
     const getProductById = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:3000/admin/getProductById/${id}`);
+            const response = await axiosClient.get(`/admin/getProductById/${id}`);
             setProductById(response.data);
         } catch (error) {
             console.error("Error fetching product by ID: ", error);

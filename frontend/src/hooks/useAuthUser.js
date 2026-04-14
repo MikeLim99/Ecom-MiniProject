@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import axiosClient from "../utils/axiosClient.js";
 import { useStateContext } from "../context/AuthContext.jsx";

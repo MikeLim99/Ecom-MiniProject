@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import axiosClient from "../utils/axiosClient";
 
 export const useAddProduct = () => {
     const [ formData, setFormData ] = useState({
@@ -32,7 +32,7 @@ export const useAddProduct = () => {
             for (const key in formData) {
                 payLoad.append(key, formData[key]);
             }
-            const response = await axios.post('http://localhost:3000/admin/addProduct', payLoad)
+            const response = await axiosClient.post('/admin/addProduct', payLoad)
             console.log('Product added successfully: ', response.data);
             setFormData({
                 productName: "",
