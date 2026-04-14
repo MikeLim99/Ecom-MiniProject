@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import InputBox from '../../../components/basics/InputBox';
 import Button from '../../../components/basics/Button';
-import AddProductModal from '../../../components/modals/addProductModal';
+import AddProductModal from '../../../components/modals/addProductModal.jsx';
 import { useGetProduct } from '../../../hooks/useGetProduct';
 import EditProductModal from '../../../components/modals/EditProductModal';
 
