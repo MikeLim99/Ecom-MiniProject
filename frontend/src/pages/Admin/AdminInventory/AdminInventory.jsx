@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import InputBox from '../../../components/basics/InputBox';
+import React, { useEffect, useState } from 'react'
 import Button from '../../../components/basics/Button';
 import AddProductModal from '../../../components/modals/addProductModal.jsx';
 import { useGetProduct } from '../../../hooks/useGetProduct';
@@ -10,6 +9,11 @@ function AdminInventory() {
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ selectedProduct, setSelectedProduct ] = useState(null);
   const { products, getAllProducts } = useGetProduct();
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
   return (
     <div className='flex flex-col w-full h-screen bg-white'>
       {/* Header */}
