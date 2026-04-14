@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../../../components/basics/Button';
-import AddProductModal from '../../../components/modals/addProductModal.jsx';
+import AddProductModal from '../../../components/modals/AddProductModal.jsx';
 import { useGetProduct } from '../../../hooks/useGetProduct';
 import EditProductModal from '../../../components/modals/EditProductModal';
 
