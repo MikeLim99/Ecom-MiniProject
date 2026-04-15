@@ -3,12 +3,13 @@ import Button from '../../../components/basics/Button';
 import AddProductModal from '../../../components/modals/AddProductModal.jsx';
 import { useGetProduct } from '../../../hooks/useGetProduct';
 import EditProductModal from '../../../components/modals/EditProductModal';
+import LoadingState from '../../../components/basics/LoadingState';
 
 function AdminInventory() {
   const [ showAddProduct, setShowAddProduct ] = useState(false);
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ selectedProduct, setSelectedProduct ] = useState(null);
-  const { products, getAllProducts } = useGetProduct();
+  const { products, getAllProducts, loading, error } = useGetProduct();
 
   useEffect(() => {
     getAllProducts();
@@ -84,6 +85,11 @@ function AdminInventory() {
     
     {/* Stocks */}
     <div className='mx-15 border border-[#D9D9D9] rounded-xl h-screen overflow-auto my-10'>
+        {loading ? (
+          <LoadingState message='Loading inventory...' />
+        ) : error ? (
+          <div className='flex min-h-[240px] items-center justify-center text-sm text-red-500'>{error}</div>
+        ) : (
       <table className='w-full text-left border-collapse'>
         <thead className='border-b border-[#D9D9D9]'>
           <tr>
@@ -136,6 +142,7 @@ function AdminInventory() {
         </tbody>
     {/* Tabs */}
       </table>
+      )}
     </div>
   </div>
   )

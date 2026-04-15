@@ -4,7 +4,7 @@ import ProductModel from "../model/ProductModel.js";
 
 const addProduct = async (req, res) => {
     const { productName, productDescription, price, category, discount, stock, featuredDisplay } = req.body;
-    const productImage = req.file ? `/uploads/products/${req.file.filename}` : "";
+    const productImage = req.file?.path || "";
 
     try {
         const newProduct = new ProductModel({
@@ -33,18 +33,24 @@ const editProduct = async (req, res) => {
     const {id} = req.params;
 
     const { productName, productDescription, price, category, discount, stock, featuredDisplay } = req.body;
-    const productImage = req.file ? `/uploads/products/${req.file.filename}` : "";
+    const updates = {
+        productName,
+        productDescription,
+        price,
+        category,
+        discount,
+        stock,
+        featuredDisplay
+    };
+
+    if (req.file?.path) {
+        updates.productImage = req.file.path;
+    }
 
     try {
-        const updatedProduct = await ProductModel.findByIdAndUpdate(id, {
-            productName,
-            productDescription,
-            price,
-            category,
-            discount,
-            stock,
-            productImage,
-            featuredDisplay
+        const updatedProduct = await ProductModel.findByIdAndUpdate(id, updates, {
+            new: true,
+            runValidators: true
         })
         if (!updatedProduct) {
             return res.status(404).json({ error: 'Product not found' });

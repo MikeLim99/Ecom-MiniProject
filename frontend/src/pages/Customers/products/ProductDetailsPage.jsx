@@ -5,11 +5,12 @@ import Button from '../../../components/basics/Button';
 import { useGetProduct } from '../../../hooks/useGetProduct';
 import { CartContext } from '../../../context/CartContext';
 import toast, { Toaster } from "react-hot-toast";
+import LoadingState from '../../../components/basics/LoadingState';
 
 
 function ProductDetailsPage() {
     const { id } = useParams();
-    const { getProductById, productById } = useGetProduct();
+    const { getProductById, productById, loading, error } = useGetProduct();
     const { dispatch } = useContext(CartContext);
     const [showReview, setReview] = useState(false);
     const product = productById;
@@ -19,6 +20,14 @@ function ProductDetailsPage() {
     useEffect(() => {
         getProductById(id);
     }, [id, getProductById]);
+
+    if (loading) {
+        return <LoadingState message='Loading product details...' />
+    }
+
+    if (error) {
+        return <div className='flex justify-center items-center h-[50vh]'><h1 className='text-2xl text-red-500'>{error}</h1></div>
+    }
     
     if (!product) {
         return <div className='flex justify-center items-center h-[50vh]'><h1 className='text-2xl'>Product not found</h1></div>;

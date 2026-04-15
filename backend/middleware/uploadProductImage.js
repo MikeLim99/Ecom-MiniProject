@@ -1,24 +1,18 @@
 import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import cloudinary from '../config/cloudinary.js';
 
-const uploadDir = "uploads/products";
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-    destination: (_req, _file, cb) => cb(null, uploadDir),
-    filename: (_req, file, cb) => {
-        const ext = path.extname(file.originalname).toLowerCase();
-        cb(null, `product-${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`);
-    },
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'products', // Cloudinary folder
+    allowed_formats: ['jpg', 'png', 'webp'],
+    public_id: (req, file) =>
+      `product-${Date.now()}-${Math.round(Math.random() * 1e9)}`
+  },
 });
 
-const fileFilter = (_req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (allowedTypes.includes(file.mimetype))
-        return cb(null, true);
-    cb(new Error('Only JPEG, PNG, and WEBP images are allowed'));
-};
-
-export const uploadProductImage = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024}
+export const uploadProductImage = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
 });

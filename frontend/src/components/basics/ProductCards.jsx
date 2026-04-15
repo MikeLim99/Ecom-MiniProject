@@ -5,9 +5,10 @@ import { Link, useNavigate } from 'react-router';
 import { getImageUrl } from '../../utils/getImageURLs';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
+import LoadingState from './LoadingState';
 
 function ProductCards({ featuredOnly = false, category = '' }) {
-    const { products, getAllProducts } = useGetProduct();
+    const { products, getAllProducts, loading, error } = useGetProduct();
     const { dispatch } = useContext(CartContext);
     const navigate = useNavigate();
 
@@ -36,13 +37,25 @@ function ProductCards({ featuredOnly = false, category = '' }) {
 
         return true;
     });
+
+    if (loading) {
+        return <LoadingState message='Loading products...' />
+    }
+
+    if (error) {
+        return <div className='flex w-full items-center justify-center py-10 text-sm text-red-500'>{error}</div>
+    }
+
+    if (displayedProducts.length === 0) {
+        return <div className='flex w-full items-center justify-center py-10 text-sm text-gray-500'>No products found.</div>
+    }
     
   return (
     <>
     {displayedProducts.map((product) => (
     <Link className='w-[250px] h-[300px] bg-highlight-200 rounded-md shadow-md mx-auto pt-5 hover:scale-105 transition-transform duration-300' key={product._id} to={`/product/${product._id}`} role='button'>
         <div className='w-[210px] h-[150px] rounded-md mx-auto'>
-            <img src={getImageUrl(`/uploads/${product.productImage}`)} alt={product.productName} className='w-full h-full object-contain'/>
+            <img src={getImageUrl(product.productImage)} alt={product.productName} className='w-full h-full object-contain'/>
         </div>
         <div className='mx-auto w-[200px]'>
             <h1 className='text-[15px]'>{product.productName}</h1>
