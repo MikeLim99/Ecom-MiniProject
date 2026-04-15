@@ -21,6 +21,11 @@ export const uploadProductImage = {
         return next();
       }
 
+      const cfg = cloudinary.config();
+      if (!cfg.cloud_name || !cfg.api_key || !cfg.api_secret) {
+        return res.status(500).json({ error: 'Cloudinary is not configured on the server.' });
+      }
+
       try {
         const uploadResult = await new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
@@ -42,6 +47,7 @@ export const uploadProductImage = {
         req.file.filename = uploadResult.public_id;
         return next();
       } catch (error) {
+        console.error('Cloudinary upload error:', error);
         return res.status(500).json({ error: 'Cloudinary upload failed', details: error.message });
       }
     }
