@@ -1,18 +1,49 @@
 import multer from 'multer';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import cloudinary from '../config/cloudinary.js';
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'products', // Cloudinary folder
-    allowed_formats: ['jpg', 'png', 'webp'],
-    public_id: (req, file) =>
-      `product-${Date.now()}-${Math.round(Math.random() * 1e9)}`
-  },
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      return cb(new Error('Only JPG, PNG, and WEBP images are allowed.'));
+    }
+    cb(null, true);
+  }
 });
 
-export const uploadProductImage = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
-});
+export const uploadProductImage = {
+  single: (fieldName) => [
+    upload.single(fieldName),
+    async (req, res, next) => {
+      if (!req.file) {
+        return next();
+      }
+
+      try {
+        const uploadResult = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            {
+              folder: 'products',
+              public_id: `product-${Date.now()}-${Math.round(Math.random() * 1e9)}`,
+              resource_type: 'image'
+            },
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result);
+            }
+          );
+
+          stream.end(req.file.buffer);
+        });
+
+        req.file.path = uploadResult.secure_url;
+        req.file.filename = uploadResult.public_id;
+        return next();
+      } catch (error) {
+        return res.status(500).json({ error: 'Cloudinary upload failed', details: error.message });
+      }
+    }
+  ]
+};
